@@ -52,27 +52,49 @@ void check_tamanho_quadro_memoria(int check_tamanho_quadro) {
 		exit(1);  
     };
 	}
-void check_tamanho_memoria_total(int check_tamanho_memoria_total) {
+void check_tamanho_memoria_total(int check_tamanho_memoria) {
     // O tamanho da memória total deve ser um valor positivo maior que zero e múltiplo de 2
     // Além disso, um tamanho razoável paraa memória total está na faixa de 128KB a 16384KB
     // Esta função valida se essa entrada está dentro destas duas faixas
-  	if(!(check_tamanho_memoria_total % 2) & check_tamanho_memoria_total >= 128 & check_tamanho_memoria_total <= 16384){
+  	if(!(check_tamanho_memoria % 2) & check_tamanho_memoria >= 128 & check_tamanho_memoria <= 16384){
   		return;
   	}
 	else {
         printf("Tamanho de memória total inválido!\n");
-        if(check_tamanho_memoria_total < 128 || check_tamanho_memoria_total > 16384){
+        if(check_tamanho_memoria < 128 || check_tamanho_memoria > 16384){
             printf("Valor fora da faixa razoável! Favor entrar com um valor maior ou igual a 2KB e menor ou igual a 64KB.\n");
         }
-        if(check_tamanho_memoria_total % 2){
+        if(check_tamanho_memoria % 2){
             printf("Valor não múltiplo de 2. Favor entrar com um valor que seja divisível por 2.\n");
         }
-        if(check_tamanho_memoria_total < 0){
+        if(check_tamanho_memoria < 0){
             printf("Valor negativo. Favor entrar com um valor que seja maior que zero.\n");
         }
 		exit(1);  
     };
 	}
+
+
+void relatorio_estatisticas(char *arquivo_entrada, int tamanho_quadro, int tamanho_memoria, char *algoritmo_substituicao,
+                            int acessos_leitura, int acessos_escrita) {
+    // Esta funcao imprime no terminal os parâmetros de entrada do programa e as estatísiticas coletadas durante a execução do simulador
+    int acessos_totais = acessos_leitura + acessos_escrita;
+    printf("Parametros de entrada:\n");
+    printf("--------------------------------");
+    printf("Arquivo de entrada: %s\n", arquivo_entrada);
+    printf("Tamanho da memoria: %d KB\n", tamanho_memoria);
+    printf("Tamanho das páginas: %d KB\n", tamanho_quadro);
+    printf("Tecnica de reposição: %s\n", algoritmo_substituicao);
+    printf("--------------------------------");
+    printf("Estatísitcas :\n");
+    printf("--------------------------------");
+    // printf("Acessos de leitura à memória: %s\n" acessos_leitura);
+    // printf("Acessos de escrita à memória: %s\n" acessos_escrita);
+    printf("Acessos totais à memória: %s\n", acessos_totais);
+    printf("Páginas lidas: %d\n", acessos_leitura);
+    printf("Paginas escritas: %d\n", acessos_escrita);
+    printf("--------------------------------");
+}
 
 int main (int argc, char *argv[]){
 
@@ -122,27 +144,35 @@ int main (int argc, char *argv[]){
     // memoria_processo memoria_processo;
     // criaMemoriaProcesso(&memoria_processo, tamanho_memoria);
 
-    // /*
-    // leitura dos acessos.
-    // */
     // unsigned int tmpPOS;
-    // char tmpOP;
     // int tamanho_pagina_real = tamanho_pagina * pow(2, 10); //tamanho da página em bytes
 
-    // unsigned int indice;
-    // unsigned int pageFault = 0;
-    // unsigned int paginas_lidas = 0;
-    // unsigned int paginas_escritas = 0;
+    //unsigned int indice;
+    // unsigned int paginas_ = 0;
+    int acessos_leitura = 0;
+    int acessos_escrita = 0;
+
+    unsigned addr;
+    char rw;
 
     printf("Executando simulador ...\n");
 
+    while(fscanf(fptr, "%x %c", &addr, &rw) != EOF) {
+        // Contar o numero de acessos de leitura e escrita
+        if(rw == "R") {
+            acessos_leitura += 1;
+        }
+        if(rw == "W") {
+            acessos_escrita += 1;
+        }
+
+    }
     // while(fscanf(arquivo,"%x %c\n", &tmpPOS, &tmpOP) != EOF){
     //     pulso_clock++;
     //     //incrementa o número de instruções lidas (semelhante aos pulsos de clock)
     //     indice = tmpPOS % tabela.num_entradas;
     //     //achei a pagina, agora vou acessar o conteudo dela
-    //     paginas_lidas += tmpOP == 'R' ? 1 : 0;
-    //     paginas_escritas += tmpOP == 'W' ? 1 : 0;
+
     //     if(tabela.paginas[indice].presente){
     //         //pagina esta na memoria principal e seu endereço é a moldura
     //         //redefinindo último acesso
@@ -177,14 +207,12 @@ int main (int argc, char *argv[]){
 
     //     }
     // }
-    // printf("Arquivo de entrada: %s\n", arquivo_entrada);
-    // printf("Tamanho da memoria: %d KB\n", tamanho_memoria);
-    // printf("Tamanho das páginas: %d KB\n", tamanho_pagina);
-    // printf("Tecnica de reposição: %s\n", algoritmo_substituicao);
-    // printf("Páginas lidas: %d\n", paginas_lidas);
-    // printf("Paginas escritas: %d\n", paginas_escritas);
-    // Não precisa:
-    // printf("Faltas de pagina: %d\n\n", pageFault);
+
+    // Função para apresentar o relatório com parâmetros de entrada e estatísitcas geradas durante a execução do simulador
+    relatorio_estatisitcas(*arquivo_entrada_memoria, tamanho_quadro_memoria, tamanho_memoria_total, *algoritmo_substitucao,
+                            acessos_leitura, acessos_escrita);
+
+ 
 
     return 0;
 }
