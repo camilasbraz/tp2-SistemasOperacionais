@@ -2,9 +2,17 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Estrutura para representar uma entrada de página na tabela de páginas
+typedef struct {
+    unsigned int endereco;
+    char operacao;
+    int presente;
+    int modificado;
+} Pagina;
+
 
 void check_algoritmo_subsituicao(char *algoritmo_check) {
-    // O programa utiliza 3 algoritmos de substituição: 2a, fifo, lru ou random
+    // O programa utiliza 4 algoritmos de substituição: 2a, fifo, lru ou random
     // Essa função confere se essa entrada feita por linha de comando do nome do algoritmo
     // é valida
     if(strcmp(algoritmo_check, "2a") || strcomp(algoritmo_check, "fifo") || strcmp(algoritmo_check, "random") || strcmp(algoritmo_check, "lru")) {
@@ -75,10 +83,10 @@ void check_tamanho_memoria_total(int check_tamanho_memoria) {
 	}
 
 
-void relatorio_estatisticas(char *arquivo_entrada, int tamanho_quadro, int tamanho_memoria, char *algoritmo_substituicao,
+
+void relatorio_estatisticas(char *arquivo_entrada, int tamanho_quadro, int tamanho_memoria, char *algoritmo_substituicao, int acessos_totais,
                             int acessos_leitura, int acessos_escrita) {
     // Esta funcao imprime no terminal os parâmetros de entrada do programa e as estatísiticas coletadas durante a execução do simulador
-    int acessos_totais = acessos_leitura + acessos_escrita;
     printf("Parametros de entrada:\n");
     printf("--------------------------------");
     printf("Arquivo de entrada: %s\n", arquivo_entrada);
@@ -110,7 +118,12 @@ int main (int argc, char *argv[]){
     // Parâmetros de entrada (linha de comando)
     // Os parâmetros argv[1] e argv[2] são transformados para o lowercase (função tolower()) para facilitar a conferência
     char *algoritmo_substitucao = tolower(argv[1]);
+    // Tratamento caso a entrada do nome do algoritmo não esteja como siga
+    if (strcmp(algoritmo_substitucao, "segunda chance") || strcmp(algoritmo_substitucao, "segundachance")) {
+        algoritmo_substitucao = "2a";
+    };
     char *arquivo_entrada_memoria = tolower(argv[2]);
+   
     // Os parâmetros argv[3] e argv[4] são transformados em int (função atoi()) pois serão tratados como numéricos
     // pela lógica do código
     int tamanho_quadro_memoria = atoi(argv[3]);
@@ -124,93 +137,119 @@ int main (int argc, char *argv[]){
     check_tamanho_memoria_total(tamanho_memoria_total);
 	
     // Abertura do arquivo de entrada com extensão .log no modo leitura
-    FILE *fptr = fopen(arquivo_entrada_memoria,"r");
+    FILE *fptr = fopen(arquivo_entrada_memoria, "r");
     // Aponta o erro e encerra o programa caso a leitura do arquivo acima não funcione corretamente 
     if(fptr== NULL){
         printf("Erro na abertura do arquivo de memória de entrada. Favor verificar seu arquivo!\n");
         exit(0);
     }
 
+    // Alocar memória para para o processo
+    // Para alocar a memoria, é necessário saber o número de linhas do arquivo de entrada.
+    // Assim, essa função soma 1 à variável numero_linhas (setada em 0 inicialmente) a cada linha lida do arquivo de entrada
+    int numero_linhas = 0;
+    char linha;
+    while ((linha = fgetc(fptr)) != EOF) {
+        if (linha == '\n') {
+            numero_linhas++;
+        }
+    }
 
-    // /*
-    // Criar a tabela de páginas de acordo com o tamanho especificado.
-    // */
-    // tabela tabela;
-    // criaTabela(&tabela, tamanho_pagina);
-    
-    // /*
-    // Aloca memória para o processo
-    // */
-    // memoria_processo memoria_processo;
-    // criaMemoriaProcesso(&memoria_processo, tamanho_memoria);
+    // Reposicione o ponteiro do arquivo para o início
+    fseek(fptr, 0, SEEK_SET);
 
-    // unsigned int tmpPOS;
-    // int tamanho_pagina_real = tamanho_pagina * pow(2, 10); //tamanho da página em bytes
+    // Aloque memória para armazenar as entradas do arquivo
+    Pagina* paginas = (Pagina*)malloc(numero_linhas * sizeof(Pagina));
+    if (paginas == NULL) {
+        printf("Erro ao alocar memória.\n");
+        fclose(fptr);
+        return 1;
+    }
 
-    //unsigned int indice;
-    // unsigned int paginas_ = 0;
+    // Leia as entradas do arquivo e armazene-as na memória
+    for (int i = 0; i < numero_linhas; i++) {
+        fscanf(fptr, "%x %c", &paginas[i].endereco, &paginas[i].operacao);
+        paginas[i].presente = 0;
+        paginas[i].modificado = 0;
+    };
+
+    // Criação da memória física
+    Pagina* memoria_fisica = (Pagina*)malloc(tamanho_memoria_total * sizeof(Pagina));
+    if (memoria_fisica == NULL) {
+        printf("Erro ao alocar memória para a memória física.\n");
+        return;
+    }
+
+    // Inicialização da memória física
+    for (int i = 0; i < tamanho_memoria_total; i++) {
+        memoria_fisica[i].presente = 0;
+        memoria_fisica[i].modificado = 0;
+    }
+
+    // Variáveis para coletar estatísticas
+    int acessos_totais = 0;
     int acessos_leitura = 0;
     int acessos_escrita = 0;
 
-    unsigned addr;
-    char rw;
-
-    printf("Executando simulador ...\n");
-
-    while(fscanf(fptr, "%x %c", &addr, &rw) != EOF) {
-        // Contar o numero de acessos de leitura e escrita
-        if(rw == "R") {
-            acessos_leitura += 1;
-        }
-        if(rw == "W") {
-            acessos_escrita += 1;
-        }
-
-    }
-    // while(fscanf(arquivo,"%x %c\n", &tmpPOS, &tmpOP) != EOF){
-    //     pulso_clock++;
-    //     //incrementa o número de instruções lidas (semelhante aos pulsos de clock)
-    //     indice = tmpPOS % tabela.num_entradas;
-    //     //achei a pagina, agora vou acessar o conteudo dela
-
-    //     if(tabela.paginas[indice].presente){
-    //         //pagina esta na memoria principal e seu endereço é a moldura
-    //         //redefinindo último acesso
-    //         memoria_processo.molduras[tabela.paginas[indice].moldura].ultimo_acesso = pulso_clock;
-    //         //página modificada
-    //         memoria_processo.molduras[tabela.paginas[indice].moldura].pagina_modificada = tmpOP == 'W' ? 1 : 0; 
-    //     }else{
-    //         //pagina nao esta na memoria principal
-    //         pageFault++;
-    //         unsigned int indice_moldura;
-    //         if(!strcmp("fifo", algoritmo_substituicao) || !strcmp("FIFO", algoritmo_substituicao)){
-    //             //fifo, me dê a posição da moldura que eu possa fazer a substituição
-    //             indice_moldura = fifo_escolha(&memoria_processo, pulso_clock);
-    //         }else if(!strcmp("lru", algoritmo_substituicao) || !strcmp("LRU", algoritmo_substituicao)){
-    //             //lru, me dê a posição da moldura que eu possa fazer a substituição
-    //             indice_moldura = lru_escolha(&memoria_processo, pulso_clock);
-    //         }else if(!strcmp("random", algoritmo_substituicao) || !strcmp("RANDOM", algoritmo_substituicao)){
-    //              //random, me dê a posição da moldura que eu possa fazer a substituição
-    //             indice_moldura = random_escolha(memoria_processo.num_entradas);
-    //         }
-    //         //a página que ocupava esta moldura não está mais presente
-    //         if(memoria_processo.molduras[indice_moldura].pagina){
-    //             memoria_processo.molduras[indice_moldura].pagina->presente = 0;
-    //             memoria_processo.molduras[indice_moldura].pagina_modificada = 0;
-    //         }
-    //         //a página referenciada pelo endereço agora esta presente
-    //         tabela.paginas[indice].presente = 1;
-    //         //a moldura recebe a página e atualiza seus temporizadores
-    //         memoria_processo.molduras[indice_moldura].pagina = &tabela.paginas[indice];
-    //         memoria_processo.molduras[indice_moldura]._carregamento = pulso_clock;
-    //         memoria_processo.molduras[indice_moldura].ultimo_acesso = pulso_clock;
-
-    //     }
+    // unsigned addr;
+    // char rw;
+    // while(fscanf(fptr, "%x %c", &addr, &rw) != EOF) {
     // }
 
+    printf("Executando simulador ...\n");
+    // Processamento dos acessos à memória
+    for (int i = 0; i < numero_linhas; i++) {
+        // Contar o numero de acessos totais e de leitura e escrita
+        acessos_totais++;
+        if(paginas[i].operacao == "R" || paginas[i].operacao == "r") {
+            acessos_leitura += 1;
+        }
+        if(paginas[i].operacao == "W" || paginas[i].operacao == "w") {
+            acessos_escrita += 1;
+        }
+        // Verificar se a página está presente na memória física
+        if (paginas[i].presente == 0) {
+            paginas[i].presente = 1;
+
+            // Verificar se há um quadro livre na memória física
+            int quadroLivre = -1;
+            for (int j = 0; j < tamanho_memoria_total; j++) {
+                if (memoria_fisica[j].presente == 0) {
+                    quadroLivre = j;
+                    break;
+                }
+            }
+
+            // Se não houver quadro livre, aplicar o algoritmo de substituição
+            if (quadroLivre == -1) {
+                // Aplicar o algoritmo de substituição de páginas (exemplo: FIFO)
+                // Implemente aqui a lógica do algoritmo de substituição de páginas
+                // Atualize o valor de quadroLivre com o índice do quadro que será substituído
+                // Atualize as estatísticas conforme necessário
+            }
+
+            // Carregar a página do arquivo de paginação para a memória física
+            // Implemente aqui a lógica de carregamento da página do arquivo de paginação
+            // Atualize as estatísticas conforme necessário
+        }
+
+        // Atualizar o bit de modificado se a operação for de escrita
+        if (paginas[i].operacao == 'W') {
+            acessos_escrita++;
+            paginas[i].modificado = 1;
+        }
+    }
+
     // Função para apresentar o relatório com parâmetros de entrada e estatísitcas geradas durante a execução do simulador
-    relatorio_estatisitcas(*arquivo_entrada_memoria, tamanho_quadro_memoria, tamanho_memoria_total, *algoritmo_substitucao,
+    relatorio_estatisitcas(*arquivo_entrada_memoria, tamanho_quadro_memoria, tamanho_memoria_total, *algoritmo_substitucao, acessos_totais,
                             acessos_leitura, acessos_escrita);
+
+    // Liberar a memória alocada
+    free(memoria_fisica);
+    free(paginas);
+
+    // Fechamento do arquivo
+    fclose(fptr);
 
  
 
