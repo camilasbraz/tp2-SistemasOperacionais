@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+#include <math.h>
 
 // Estrutura para representar uma entrada de página na tabela de páginas
 typedef struct {
@@ -15,7 +17,7 @@ void check_algoritmo_subsituicao(char *algoritmo_check) {
     // O programa utiliza 4 algoritmos de substituição: 2a, fifo, lru ou random
     // Essa função confere se essa entrada feita por linha de comando do nome do algoritmo
     // é valida
-    if(strcmp(algoritmo_check, "2a") || strcomp(algoritmo_check, "fifo") || strcmp(algoritmo_check, "random") || strcmp(algoritmo_check, "lru")) {
+    if(strcmp(algoritmo_check, "2a") || strcmp(algoritmo_check, "fifo") || strcmp(algoritmo_check, "random") || strcmp(algoritmo_check, "lru")) {
        return;
     }
     else {
@@ -87,52 +89,54 @@ void check_tamanho_memoria_total(int check_tamanho_memoria) {
 void relatorio_estatisticas(char *arquivo_entrada, int tamanho_quadro, int tamanho_memoria, char *algoritmo_substituicao, int acessos_totais,
                             int acessos_leitura, int acessos_escrita) {
     // Esta funcao imprime no terminal os parâmetros de entrada do programa e as estatísiticas coletadas durante a execução do simulador
+    printf("--------------------------------\n");
     printf("Parametros de entrada:\n");
-    printf("--------------------------------");
     printf("Arquivo de entrada: %s\n", arquivo_entrada);
     printf("Tamanho da memoria: %d KB\n", tamanho_memoria);
     printf("Tamanho das páginas: %d KB\n", tamanho_quadro);
     printf("Tecnica de reposição: %s\n", algoritmo_substituicao);
-    printf("--------------------------------");
-    printf("Estatísitcas :\n");
-    printf("--------------------------------");
-    // printf("Acessos de leitura à memória: %s\n" acessos_leitura);
-    // printf("Acessos de escrita à memória: %s\n" acessos_escrita);
-    printf("Acessos totais à memória: %s\n", acessos_totais);
+    printf("--------------------------------\n");
+    printf("Estatísitcas:\n");
+    printf("Acessos totais à memória: %d\n", acessos_totais);
     printf("Páginas lidas: %d\n", acessos_leitura);
     printf("Paginas escritas: %d\n", acessos_escrita);
-    printf("--------------------------------");
+    printf("--------------------------------\n");
 }
 
 int main (int argc, char *argv[]){
-
     // tp2virtual lru arquivo.log 4 128
     printf("Executando o programa %s\n", argv[0]);
+    printf("--------------------------------\n");
 
     // Validar o número de parâmetros de entrada (linha de comando)
     if(argc != 5){
         printf("O programa requer 4 entradas. Favor executar novamente com o número correto de parâmetros!\n");
         exit(0);
-    }
+    };
 	
     // Parâmetros de entrada (linha de comando)
     // Os parâmetros argv[1] e argv[2] são transformados para o lowercase (função tolower()) para facilitar a conferência
-    char *algoritmo_substitucao = tolower(argv[1]);
+    char *algoritmo_substitucao = argv[1];
+    
     // Tratamento caso a entrada do nome do algoritmo não esteja como siga
-    if (strcmp(algoritmo_substitucao, "segunda chance") || strcmp(algoritmo_substitucao, "segundachance")) {
-        algoritmo_substitucao = "2a";
-    };
-    char *arquivo_entrada_memoria = tolower(argv[2]);
+    //if (strcmp(algoritmo_substitucao, "segunda chance") || strcmp(algoritmo_substitucao, "segundachance")) {
+        //algoritmo_substitucao = "2a";
+    //};
+    char *arquivo_entrada_memoria = argv[2];
    
     // Os parâmetros argv[3] e argv[4] são transformados em int (função atoi()) pois serão tratados como numéricos
     // pela lógica do código
-    int tamanho_quadro_memoria = atoi(argv[3]);
-    int tamanho_memoria_total = atoi(argv[4]);
+    int tamanho_quadro_memoria_aux = atoi(argv[3]);
+    // Tamanho em bytes da página (binary)
+    int tamanho_quadro_memoria = tamanho_quadro_memoria_aux * pow(2,10);
+    // Tamanho em bytes da página (binary)
+    int tamanho_memoria_total_aux = atoi(argv[4]);
+    int tamanho_memoria_total  = tamanho_memoria_total_aux * pow(2,10);
 
     // Funções para validação das entradas 
     // Cancela a execução do programa caso alguma entrada não seja validada
-    check_algoritmo_subsituicao(*algoritmo_substitucao);
-    check_arquivo_entrada(*arquivo_entrada_memoria);
+    check_algoritmo_subsituicao(algoritmo_substitucao);
+    check_arquivo_entrada(arquivo_entrada_memoria);
     check_tamanho_quadro_memoria(tamanho_quadro_memoria);
     check_tamanho_memoria_total(tamanho_memoria_total);
 	
@@ -153,7 +157,7 @@ int main (int argc, char *argv[]){
         if (linha == '\n') {
             numero_linhas++;
         }
-    }
+    } 
 
     // Reposicione o ponteiro do arquivo para o início
     fseek(fptr, 0, SEEK_SET);
@@ -163,7 +167,6 @@ int main (int argc, char *argv[]){
     if (paginas == NULL) {
         printf("Erro ao alocar memória.\n");
         fclose(fptr);
-        return 1;
     }
 
     // Leia as entradas do arquivo e armazene-as na memória
@@ -177,8 +180,7 @@ int main (int argc, char *argv[]){
     Pagina* memoria_fisica = (Pagina*)malloc(tamanho_memoria_total * sizeof(Pagina));
     if (memoria_fisica == NULL) {
         printf("Erro ao alocar memória para a memória física.\n");
-        return;
-    }
+    };
 
     // Inicialização da memória física
     for (int i = 0; i < tamanho_memoria_total; i++) {
@@ -201,12 +203,12 @@ int main (int argc, char *argv[]){
     for (int i = 0; i < numero_linhas; i++) {
         // Contar o numero de acessos totais e de leitura e escrita
         acessos_totais++;
-        if(paginas[i].operacao == "R" || paginas[i].operacao == "r") {
-            acessos_leitura += 1;
-        }
-        if(paginas[i].operacao == "W" || paginas[i].operacao == "w") {
-            acessos_escrita += 1;
-        }
+        if(paginas[i].operacao == 'R' || paginas[i].operacao == 'r') {
+            acessos_leitura++;
+        };
+        if(paginas[i].operacao == 'W' || paginas[i].operacao == 'w') {
+            acessos_escrita++;
+        };
         // Verificar se a página está presente na memória física
         if (paginas[i].presente == 0) {
             paginas[i].presente = 1;
@@ -235,13 +237,13 @@ int main (int argc, char *argv[]){
 
         // Atualizar o bit de modificado se a operação for de escrita
         if (paginas[i].operacao == 'W') {
-            acessos_escrita++;
+            //acessos_escrita++;
             paginas[i].modificado = 1;
         }
     }
 
     // Função para apresentar o relatório com parâmetros de entrada e estatísitcas geradas durante a execução do simulador
-    relatorio_estatisitcas(*arquivo_entrada_memoria, tamanho_quadro_memoria, tamanho_memoria_total, *algoritmo_substitucao, acessos_totais,
+    relatorio_estatisticas(arquivo_entrada_memoria, tamanho_quadro_memoria, tamanho_memoria_total, algoritmo_substitucao, acessos_totais,
                             acessos_leitura, acessos_escrita);
 
     // Liberar a memória alocada
