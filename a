@@ -1,0 +1,67 @@
+// Loop principal para processar os acessos à memória
+while (!feof(fptr)) {
+    unsigned addr;
+    char rw;
+    // Lê o endereço e a operação (R ou W)
+    fscanf(fptr, "%x %c", &addr, &rw);
+
+    // Calcula o número da página a partir do endereço
+    int page = addr >> (32 - s);
+
+    // Verifica se a página está na memória física
+    if (!page_table[page].referencia) {
+        printf("2");
+        num_page_faults++;
+        acessos_leitura++;
+
+        // Verifica se há um quadro vazio na memória física
+        int frame_replaced = -1;
+        for (int i = 0; i < num_frames; i++) {
+            if (physical_memory[i].referencia == -1) {
+                frame_replaced = i;
+                break;
+            }
+        }
+
+        // Se não há um quadro vazio, utiliza o algoritmo de substituição correspondente
+        if (frame_replaced == -1) {
+            if (strcmp(algoritmo_substituicao, "fifo") == 0) {
+                frame_replaced = fifo_replacement(page_table, physical_memory, page, num_frames);
+            } else if (strcmp(algoritmo_substituicao, "lru") == 0) {
+                frame_replaced = lru_replacement(page_table, physical_memory, page, num_frames);
+            } else if (strcmp(algoritmo_substituicao, "random") == 0) {
+                frame_replaced = random_replacement(page_table, physical_memory, page, num_frames);
+            } else if (strcmp(algoritmo_substituicao, "2a") == 0) {
+                frame_replaced = segunda_chance_replacement(page_table, physical_memory, page, num_frames);
+            }
+        }
+
+        // Se ainda não foi encontrado um quadro vazio, ocorre a substituição de página
+        if (frame_replaced == -1) {
+            // Aqui é onde você precisa implementar o tratamento completo da falta de página
+            // Isso envolve a leitura da página ausente da memória secundária
+            // e sua colocação no quadro liberado na memória física
+            // Além disso, é necessário atualizar a tabela de páginas e outros controles relevantes
+            // Nesta versão modificada do código, vamos apenas atribuir a página ausente ao quadro liberado sem fazer as operações completas
+
+            frame_replaced = page_table[page].referencia; // Atribui a página ausente ao quadro liberado
+
+            // Aqui você deve realizar a leitura da página da memória secundária e atualizar as estruturas relevantes
+
+            // ...
+
+            // Avisar que ocorreu uma substituição de página
+            printf("Page replacement occurred!\n");
+        }
+
+        // Atualiza a tabela de páginas
+        page_table[page].referencia = 1;
+        page_table[page].ultimo_acesso = current_time;
+
+        // Atualiza o quadro na memória física
+        physical_memory[frame_replaced].referencia = page;
+        physical_memory[frame_replaced].ultimo_acesso = current_time;
+    }
+    // Incrementa o contador de tempo
+    current_time++;
+}
