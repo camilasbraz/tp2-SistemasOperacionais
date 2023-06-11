@@ -5,21 +5,30 @@
 #include <math.h>
 #include <time.h>
 
+// Estrutura para representar um quadro de memoria na memória física
+typedef struct {
+    int indice;           // Número da página que ocupa o quadro
+    int ultimo_acesso;    // Tempo do último acesso ao quadro
+    int ocupado;          // Flag para indicar se o quadro está ocupado    
+} Quadro;
+
 // Estrutura para representar uma entrada de página na tabela de páginas
 typedef struct {
-    int referencia;      // Flag para indicar se a página está na memória física
-    int ultimo_acesso;     // Tempo do último acesso à página
-} Frame;
+    int referencia;       // Flag para indicar se a página está na memória física
+    int quadro;           // Flag para indicar o número do quadro que ocupa a memória
+    int ultimo_acesso;    // Tempo do último acesso à página
+    int suja;             // Flag que indica se a página está limpa ou suja
+} Pagina;
 
 void check_algoritmo_substituicao(char *algoritmo_check) {
     // O programa utiliza 4 algoritmos de substituição: 2a, fifo, lru ou random
     // Essa função confere se essa entrada feita por linha de comando do nome do algoritmo
     // é valida
-    if(strcmp(algoritmo_check, "2a") == 0 || strcmp(algoritmo_check, "fifo") == 0|| strcmp(algoritmo_check, "random") == 0 || strcmp(algoritmo_check, "lru") == 0) {
-       return;
+    if(strcmp(algoritmo_check, "2a") == 0 || strcmp(algoritmo_check, "fifo") == 0 || strcmp(algoritmo_check, "random") == 0 || strcmp(algoritmo_check, "lru") == 0) {
+        return;
     }
     else {
-        printf("Alagoritmo de substituição inválido!\n Favor executar novamente escolhendo '2A', 'FIFO', 'LRU' ou 'RANDOM' como algortimo.\n");
+        printf("Algoritmo de substituição inválido!\n Favor executar novamente escolhendo '2A', 'FIFO', 'LRU' ou 'RANDOM' como algoritmo.\n");
         exit(0);  
     };
 }
@@ -30,8 +39,8 @@ void check_arquivo_entrada(char *arquivo_check) {
     // Essa função confere se essa entrada feita por linha de comando do nome do arquivo
     // é valida
     if(strcmp(arquivo_check, "compilador.log") == 0 || strcmp(arquivo_check, "compressor.log") == 0 ||
-        strcmp(arquivo_check, "matriz.log") == 0 || strcmp(arquivo_check, "simulador.log")== 0) {
-       return;
+        strcmp(arquivo_check, "matriz.log") == 0 || strcmp(arquivo_check, "simulador.log") == 0) {
+        return;
     }
     else {
         printf("Arquivo de entrada de memória inválido!\n Favor executar novamente escolhendo 'compilador.log', 'compressor.log', 'matriz.log' ou 'simulador.log' como arquivo de entrada.\n");
@@ -43,10 +52,10 @@ void check_tamanho_quadro_memoria(int check_tamanho_quadro) {
     // O tamanho do quadro da memória deve ser um valor positivo maior que zero e múltiplo de 2
     // Além disso, um tamanho razoável para o quadro de memória está na faixa de 2KB a 64KB
     // Esta função valida se essa entrada está dentro destas duas faixas
-  	if(!(check_tamanho_quadro % 2) && check_tamanho_quadro >= 2 && check_tamanho_quadro <= 64){
-  		return;
-  	}
-	else {
+    if(!(check_tamanho_quadro % 2) && check_tamanho_quadro >= 2 && check_tamanho_quadro <= 64){
+        return;
+    }
+    else {
         printf("Tamanho de quadro de memória inválido!\n");
         if(check_tamanho_quadro < 2 || check_tamanho_quadro > 64){
             printf("Valor fora da faixa razoável! Favor entrar com um valor maior ou igual a 2KB e menor ou igual a 64KB.\n");
@@ -57,19 +66,19 @@ void check_tamanho_quadro_memoria(int check_tamanho_quadro) {
         if(check_tamanho_quadro < 0){
             printf("Valor negativo. Favor entrar com um valor que seja maior que zero.\n");
         }
-		exit(1);  
+        exit(1);  
     };
-	}
+    }
 void check_tamanho_memoria_total(int check_tamanho_memoria) {
     // O tamanho da memória total deve ser um valor positivo maior que zero e múltiplo de 2
     // Além disso, um tamanho razoável paraa memória total está na faixa de 128KB a 16384KB
     // Esta função valida se essa entrada está dentro destas duas faixas
-  	if(!(check_tamanho_memoria % 2) && check_tamanho_memoria >= 128 && check_tamanho_memoria <= 16384){
-  		return;
-  	}
-	else {
+    if(!(check_tamanho_memoria % 2) && check_tamanho_memoria >= 128 && check_tamanho_memoria <= 16384){
+        return;
+    }
+    else {
         printf("Tamanho de memória total inválido!\n");
-        if(check_tamanho_memoria < 128 || check_tamanho_memoria > 16384){
+        if(check_tamanho_memoria < 128 || check_tamanho_memoria> 16384){
             printf("Valor fora da faixa razoável! Favor entrar com um valor maior ou igual a 2KB e menor ou igual a 64KB.\n");
         }
         if(check_tamanho_memoria % 2){
@@ -78,14 +87,13 @@ void check_tamanho_memoria_total(int check_tamanho_memoria) {
         if(check_tamanho_memoria < 0){
             printf("Valor negativo. Favor entrar com um valor que seja maior que zero.\n");
         }
-		exit(1);  
+        exit(1);  
     };
-	}
-
+    }
 
 
 void relatorio_estatisticas(char *arquivo_entrada, int tamanho_quadro, int tamanho_memoria, char *algoritmo_substituicao, int acessos_totais,
-                            int acessos_leitura, int acessos_escrita) {
+                            int acessos_leitura, int acessos_escrita, int num_page_faults, int num_dirty_pages) {
     // Esta funcao imprime no terminal os parâmetros de entrada do programa e as estatísiticas coletadas durante a execução do simulador
     printf("--------------------------------\n");
     printf("Parametros de entrada:\n");
@@ -96,113 +104,14 @@ void relatorio_estatisticas(char *arquivo_entrada, int tamanho_quadro, int taman
     printf("--------------------------------\n");
     printf("Estatísitcas:\n");
     printf("Acessos totais à memória: %d\n", acessos_totais);
-    printf("Páginas lidas: %d\n", acessos_leitura);
-    printf("Paginas escritas: %d\n", acessos_escrita);
+    printf("Acessos leitura: %d\n", acessos_leitura);
+    printf("Acessos escrita: %d\n", acessos_escrita);
+    printf("Page faults: %d\n", num_page_faults);
+    printf("Dirty pages: %d\n", num_dirty_pages);
     printf("--------------------------------\n");
 }
 
-int fifo_replacement(Frame *page_table, Frame *physical_memory, int page, int num_frames) {
-    // Implementação do algoritmo FIFO (First-In, First-Out)
-    int frame_replaced = physical_memory[0].referencia;
-
-    // Deslocar todos os quadros para a esquerda
-    for (int i = 1; i < num_frames; i++) {
-        physical_memory[i - 1].referencia = physical_memory[i].referencia;
-    }
-
-    // Substituir o último quadro pelo novo
-    physical_memory[num_frames - 1].referencia = page;
-
-    return frame_replaced;
-}
-
-int lru_replacement(Frame *page_table, Frame *physical_memory, int page, int num_frames) {
-    // Implementação do algoritmo LRU (Least Recently Used)
-    int frame_replaced = physical_memory[0].referencia;
-    int min_access_time = physical_memory[0].ultimo_acesso;
-    int min_index = 0;
-
-    // Encontrar o quadro com o menor tempo de acesso
-    for (int i = 1; i < num_frames; i++) {
-        if (physical_memory[i].ultimo_acesso < min_access_time) {
-            min_access_time = physical_memory[i].ultimo_acesso;
-            min_index = i;
-        }
-    }
-
-    // Substituir o quadro encontrado pelo novo
-    physical_memory[min_index].referencia = page;
-
-    return frame_replaced;
-}
-int random_replacement(Frame *page_table, Frame *physical_memory, int page, int num_frames) {
-    // Implementação do algoritmo aleatório
-    int frame_replaced = physical_memory[rand() % num_frames].referencia;
-
-    // Substituir um quadro aleatório pelo novo
-    physical_memory[rand() % num_frames].referencia = page;
-
-    return frame_replaced;
-}
-
-int segunda_chance_replacement(Frame *page_table, Frame *physical_memory, int page, int num_frames) {
-    // Implementação do algoritmo Segunda Chance (Second Chance)
-    int frame_replaced = -1;
-    int i = 0;
-
-    while (frame_replaced == -1) {
-        int current_frame = physical_memory[i].referencia;
-        if (page_table[current_frame].referencia == 0) {
-            frame_replaced = current_frame;
-        } else {
-            page_table[current_frame].referencia = 0;
-        }
-
-        i = (i + 1) % num_frames;  // Circular para o próximo quadro
-    }
-
-    // Substituir o quadro selecionado pelo novo
-    physical_memory[frame_replaced].referencia = page;
-
-    return frame_replaced;
-}
-int main (int argc, char *argv[]){
-    // tp2virtual lru arquivo.log 4 128
-    printf("Executando o programa %s\n", argv[0]);
-    printf("--------------------------------\n");
-
-    // Validar o número de parâmetros de entrada (linha de comando)
-    if(argc != 5){
-        printf("O programa requer 4 entradas. Favor executar novamente com o número correto de parâmetros!\n");
-        exit(0);
-    };
-	
-    // Parâmetros de entrada (linha de comando)
-    // Os parâmetros argv[1] e argv[2] são transformados para o lowercase (função tolower()) para facilitar a conferência
-    char *algoritmo_substitucao = argv[1];
-    
-    // Tratamento caso a entrada do nome do algoritmo não esteja como siga
-    //if (strcmp(algoritmo_substitucao, "segunda chance") || strcmp(algoritmo_substitucao, "segundachance")) {
-        //algoritmo_substitucao = "2a";
-    //};
-    char *arquivo_entrada_memoria = argv[2];
-   
-    // Os parâmetros argv[3] e argv[4] são transformados em int (função atoi()) pois serão tratados como numéricos
-    // pela lógica do código
-    int tamanho_quadro_memoria = atoi(argv[3]);
-    // Tamanho em bytes da página (binary)
-     //int tamanho_quadro_memoria = tamanho_quadro_memoria_aux * pow(2,10);
-    // Tamanho em bytes da página (binary)
-    int tamanho_memoria_total = atoi(argv[4]);
-    // int tamanho_memoria_total  = tamanho_memoria_total_aux * pow(2,10);
-
-    // Funções para validação das entradas 
-    // Cancela a execução do programa caso alguma entrada não seja validada
-    check_algoritmo_substituicao(algoritmo_substitucao);
-    //check_arquivo_entrada(arquivo_entrada_memoria);
-    check_tamanho_quadro_memoria(tamanho_quadro_memoria);
-    check_tamanho_memoria_total(tamanho_memoria_total);
-
+int determinar_pagina(int tamanho_quadro_memoria, unsigned addr){
     // Na linha int page = addr >> (32 - s);, a variável s representa o número de bits menos significativos a serem descartados do endereço addr para obter
     // o número da página correspondente.
     // A expressão (32 - s) calcula a quantidade de bits a serem mantidos no endereço, considerando que um endereço tem 32 bits no total. Subtraindo o valor 
@@ -211,50 +120,170 @@ int main (int argc, char *argv[]){
     // significativos (os s bits menos significativos) são descartados, e os bits restantes formam o número da página correspondente.
     // Por exemplo, se s for igual a 12 (para páginas de 4KB), então (32 - s) será igual a 20. Isso significa que os 20 bits mais significativos do endereço addr 
     // serão usados para determinar o número da página.
-	
+    
     // Calcular o valor de s
     unsigned s, tmp;
-    tmp = tamanho_quadro_memoria;
+    tmp =  tamanho_quadro_memoria * 1024;
     s = 0;
     while (tmp > 1) {
         tmp = tmp >> 1;
         s++;
     }
-    //printf("%d\n", s);
-    //printf("%d\n", tamanho_memoria_total);
-    //printf("%d\n", tamanho_quadro_memoria);
+    // Calcula o número da página a partir do endereço de 32 bits
+    int pagina = addr >> s;
+    return pagina;
+ }
+
+int fifo_replacement(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int indice_pagina, int numero_quadros) {
+    // Implementação do algoritmo FIFO (First-In, First-Out)
+    int frame_replaced = memoria_fisica[0].indice;
+    // Deslocar todos os quadros para a esquerda
+    for (int i = 1; i < numero_quadros; i++) {
+        memoria_fisica[i - 1].indice = memoria_fisica[i].indice;
+    }
+    // Substituir o último quadro pelo novo
+    memoria_fisica[numero_quadros - 1].indice = indice_pagina;
+    return frame_replaced;
+}
+
+int lru_replacement(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int indice_pagina, int numero_quadros, int tempo_atual) {
+    // Implementação do algoritmo LRU (Least Recently Used)
+    // This variable will keep track of the index of the frame with the least recently used page.
+    int min_index = 0;
+    int min_access_time = memoria_fisica[0].ultimo_acesso;
     
-   
+
+    // Encontrar o quadro com o menor tempo de acesso
+    // It checks if the next frame has a smaller ultimo_acesso value, indicating that it was accessed more recently.
+    for (int i = 1; i < numero_quadros; i++) {
+        printf("Ultimo acesso controle: %d\n", min_access_time);
+        if (memoria_fisica[i].ultimo_acesso < min_access_time) {
+            min_access_time = memoria_fisica[i].ultimo_acesso;
+            min_index = i;
+        }
+    }
+
+    int frame_replaced = memoria_fisica[min_index].indice;
+
+    // Substituir o quadro encontrado pelo novo
+    memoria_fisica[min_index].indice = indice_pagina;
+    memoria_fisica[min_index].ultimo_acesso = tempo_atual;
+
+    return frame_replaced;
+}
+int random_replacement(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int indice_pagina, int numero_quadros) {
+    // Implementação do algoritmo aleatório
+    int random_position = rand() % numero_quadros;
+    int frame_replaced = memoria_fisica[random_position].indice;
+
+    // Substituir um quadro aleatório pelo novo
+    memoria_fisica[random_position].indice = indice_pagina;
+
+    return frame_replaced;
+}
+
+int segunda_chance_replacement(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int indice_pagina, int numero_quadros) {
+    // Implementação do algoritmo Segunda Chance (Second Chance)
+    int frame_replaced = -1;
+    int i = 0;
+
+    while (frame_replaced == -1) {
+        int current_frame = memoria_fisica[i].indice;
+        if (tabela_de_paginas[current_frame].referencia == 0) {
+            frame_replaced = current_frame;
+        } else {
+            tabela_de_paginas[current_frame].referencia = 0;
+        }
+
+        i = (i + 1) % numero_quadros;  // Circular para o próximo quadro
+    }
+
+    // Substituir o quadro selecionado pelo novo
+    memoria_fisica[frame_replaced].indice = indice_pagina;
+
+    return frame_replaced;
+}
+
+int main (int argc, char *argv[]){
+    // tp2virtual lru arquivo.log 4 128
+    printf("Executando o programa %s\n", argv[0]);
+    
+    printf("--------------------------------\n");
+
+    // Validar o número de parâmetros de entrada (linha de comando)
+    if(argc != 5){
+        printf("O programa requer 4 entradas. Favor executar novamente com o número correto de parâmetros!\n");
+        exit(0);
+    };
+    
+    // Parâmetros de entrada (linha de comando)
+    // Os parâmetros argv[1] e argv[2] são transformados para o lowercase (função tolower()) para facilitar a conferência
+    char *algoritmo_substituicao_aux = argv[1];
+    char algoritmo_substituicao[20];
+    strcpy(algoritmo_substituicao, algoritmo_substituicao_aux);
+    for (int i = 0; algoritmo_substituicao[i]; i++) {
+        algoritmo_substituicao[i] = tolower(algoritmo_substituicao[i]);
+    }
+    // Tratamento caso a entrada do nome do algoritmo não esteja como sigla
+    if (strcmp(algoritmo_substituicao, "segunda chance") == 0 || strcmp(algoritmo_substituicao, "segundachance") == 0) {
+        strcpy(algoritmo_substituicao, "2a");
+    }
+    char* arquivo_entrada_memoria_aux = argv[2];
+    char arquivo_entrada_memoria[20];
+    strcpy(arquivo_entrada_memoria, arquivo_entrada_memoria_aux);
+
+    for (int i = 0; arquivo_entrada_memoria[i]; i++) {
+        arquivo_entrada_memoria[i] = tolower(arquivo_entrada_memoria[i]);
+    }
+
+    // Os parâmetros argv[3] e argv[4] são transformados em int (função atoi()) pois serão tratados como numéricos
+    // pela lógica do código
+    int tamanho_quadro_memoria = atoi(argv[3]);
+    // Tamanho em bytes da página (binary)
+    //int tamanho_quadro_memoria = tamanho_quadro_memoria_aux * pow(2,10);
+    // Tamanho em bytes da página (binary)
+    int tamanho_memoria_total = atoi(argv[4]);
+    // int tamanho_memoria_total  = tamanho_memoria_total_aux * pow(2,10);
+
+    // Funções para validação das entradas 
+    // Cancela a execução do programa caso alguma entrada não seja validada
+    check_algoritmo_substituicao(algoritmo_substituicao);
+    check_arquivo_entrada(arquivo_entrada_memoria);
+    check_tamanho_quadro_memoria(tamanho_quadro_memoria);
+    check_tamanho_memoria_total(tamanho_memoria_total);
+
     // Calcula o número de quadros na memória física
-    int num_frames = tamanho_memoria_total / tamanho_quadro_memoria;
-    //printf("%d\n", num_frames);
+    int numero_quadros = tamanho_memoria_total / tamanho_quadro_memoria;
 
     // Aloca espaço para a tabela de páginas
-    Frame *page_table = (Frame *) malloc(sizeof(Frame) * (1 << 21));
-
+    Pagina *tabela_de_paginas = (Pagina *) malloc(sizeof(Pagina) * (1 << 21));
     // Inicializa a tabela de páginas
-    memset(page_table, 0, sizeof(Frame) * (1 << 21));
+    if (tabela_de_paginas != NULL) {
+        memset(tabela_de_paginas, 0, sizeof(Pagina) * (1 << 21));
+    } else {
+        printf("Nâo foi possível alocar memória para tabela_de_paginas.\n");
+        exit(1);
+    }
 
     // Aloca espaço para a memória física
-    Frame *physical_memory = (Frame *) malloc(sizeof(Frame) * num_frames);
-
+    Quadro *memoria_fisica = (Quadro *) malloc(sizeof(Quadro) * numero_quadros);
     // Inicializa a memória física
-    memset(physical_memory, 0, sizeof(Frame) * num_frames);
+    if (memoria_fisica != NULL) {
+        memset(memoria_fisica, 0, sizeof(Quadro) * numero_quadros);   
+    } else {
+        printf("Não foi possível alocar memoria para memoria_fisica.\n");
+        exit(1);
+    }
 
-     // Abertura do arquivo de entrada com extensão .log no modo leitura
+    // Abertura do arquivo de entrada com extensão .log no modo leitura
     FILE *fptr = fopen(arquivo_entrada_memoria, "r");
     // Aponta o erro e encerra o programa caso a leitura do arquivo acima não funcione corretamente 
     if(fptr== NULL){
         printf("Erro na abertura do arquivo de memória de entrada. Favor verificar seu arquivo!\n");
-        return 1;
+        exit(1);
     }
 
-    // Variáveis para estatísticas
-    int num_accesses = 0;
-    int num_page_faults = 0;
-    int num_dirty_pages_written = 0;
-
-    // Variáveis de controle
+    // Variáveis de controle de ultimo acesso
     int current_time = 0;
 
     // Seed para geração de números aleatórios
@@ -264,79 +293,120 @@ int main (int argc, char *argv[]){
     int acessos_totais = 0;
     int acessos_leitura = 0;
     int acessos_escrita = 0;
-
-    unsigned addr;
-    char rw;
+    int num_page_faults = 0;
+    int num_dirty_pages = 0;
 
     printf("Executando simulador ...\n");
     // Loop principal para processar os acessos à memória
-
+    unsigned addr;
+    char rw;
     while (fscanf(fptr, "%x %c\n", &addr, &rw) == 2) {
         acessos_totais++;
-        
-        // Lê o endereço e a operação (R ou W)
-        
-        if (rw == 'W') {
-        acessos_escrita++;
-        printf("testeW\n");
-        }  
-        if (rw == 'R') {
-        acessos_leitura++;
-        printf("testeL\n");
-        }   
-        // Calcula o número da página a partir do endereço
-        int page = addr >> (32 - s);
-        
-        // Verifica se a página está na memória física
-        if (!page_table[page].referencia) {
-            printf("aqui1\n");
-            num_page_faults++;
-
-            // Verifica se há um quadro vazio na memória física
-            int frame_replaced = -1;
-            for (int i = 0; i < num_frames; i++) {
-                if (physical_memory[i].referencia == -1) {
-                    printf("aqui3\n");
-                    frame_replaced = i;
-                    break;
-                    
-                }
-            }
-            // Se não há um quadro vazio, utiliza o algoritmo de substituição correspondente
-            if (frame_replaced == -1) {
-                if (strcmp(algoritmo_substitucao, "fifo") == 0) {
-                    frame_replaced = fifo_replacement(page_table, physical_memory, page, num_frames);
-                } else if (strcmp(algoritmo_substitucao, "lru") == 0) {
-                    frame_replaced = lru_replacement(page_table, physical_memory, page, num_frames);
-                } else if (strcmp(algoritmo_substitucao, "random") == 0) {
-                    frame_replaced = random_replacement(page_table, physical_memory, page, num_frames);
-                } else if (strcmp(algoritmo_substitucao, "2a") == 0) {
-                    frame_replaced = segunda_chance_replacement(page_table, physical_memory, page, num_frames);
-                }
-            } else {
-                //Há um quadro vazio na memória física
-                frame_replaced = 0;
-            }
-
-            // Atualiza a tabela de páginas
-            page_table[page].referencia = 1;
-            page_table[page].ultimo_acesso = current_time;
-
-            // Atualiza o quadro na memória física
-            physical_memory[frame_replaced].referencia = page;
-            physical_memory[frame_replaced].ultimo_acesso = current_time;
-        }
         // Incrementa o contador de tempo
         current_time++;
+        printf("Operação: %c\n", rw);
+        // Lê o endereço e a operação (R ou W)
+        if (rw == 'W' || rw == 'w' ) {
+        acessos_escrita++;
+        }  
+        if (rw == 'R'|| rw == 'r') {
+        acessos_leitura++;
+        }   
+        
+        int indice_pagina = determinar_pagina(tamanho_quadro_memoria, addr);
+
+        printf("Acessing page: %d\n", indice_pagina);
+        //printf("Page ref: %d\n", tabela_de_paginas[page].referencia);
+
+        // Verifica se a página está na memória física
+        if (tabela_de_paginas[indice_pagina].referencia != 0){
+
+            // página na memória física
+            // atualiza ultimo acesso
+            int aux = -1;
+            for(int i = 0; i <numero_quadros; i++){
+                if(memoria_fisica[i].indice == indice_pagina){
+                    aux = i;
+                }
+            }
+            printf("Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: %d\n", aux);
+            // Página fica suja! Teve que ser escrita de volta no disco
+            // Operação de escrita em página na memória física
+            if (rw == 'W'|| rw == 'w') {
+                printf("Dirty\n");
+                tabela_de_paginas[indice_pagina].suja = 1;
+            }
+            
+            tabela_de_paginas[indice_pagina].ultimo_acesso = current_time;
+            memoria_fisica[aux].ultimo_acesso = current_time;  
+        } else {
+            // pagina não está na memória física
+            printf("Pagina nao esta na memoria fisica! Page fault\n");
+            num_page_faults++;
+            if(tabela_de_paginas[indice_pagina].suja == 1){
+                    num_dirty_pages++;
+                }
+            // Verifica se há um quadro vazio na memória física
+            int found_empty_frame = -1;
+            for (int i = 0; i < numero_quadros; i++) {
+            //printf("Memoria física no quadro %d está livre? %d\n",i, memoria_fisica[i].ocupado);
+                if (memoria_fisica[i].ocupado == 0) {
+                    printf("Quadro vazio encontrado!");
+                    printf("Memoria alocada ao quadro: %d\n", i);
+                    // atualiza memoria fisica
+                    memoria_fisica[i].ocupado = 1;
+                    memoria_fisica[i].indice = indice_pagina;
+                    memoria_fisica[i].ultimo_acesso = current_time;
+                    tabela_de_paginas[indice_pagina].quadro = i;
+
+                    found_empty_frame = 1;
+                    break;
+                }
+            }
+            // Se não há um quadro vazio, utiliza o algoritmo de substituição correspondente  
+            int frame_replaced = -1;             
+            if (found_empty_frame == -1) {
+                printf("Sem quadro vazio! Vamos usar uma técnica de reposição\n");
+                if (strcmp(algoritmo_substituicao, "fifo") == 0) {
+                    frame_replaced = fifo_replacement(tabela_de_paginas, memoria_fisica, indice_pagina, numero_quadros);
+                } else if (strcmp(algoritmo_substituicao, "lru") == 0) {
+                    frame_replaced = lru_replacement(tabela_de_paginas, memoria_fisica, indice_pagina, numero_quadros, current_time);
+                } else if (strcmp(algoritmo_substituicao, "random") == 0) {
+                    frame_replaced = random_replacement(tabela_de_paginas, memoria_fisica, indice_pagina, numero_quadros);
+                } else if (strcmp(algoritmo_substituicao, "2a") == 0) {
+                    frame_replaced = segunda_chance_replacement(tabela_de_paginas, memoria_fisica, indice_pagina, numero_quadros);
+                } 
+                
+                }
+
+                if(tabela_de_paginas[frame_replaced].suja == 1){
+                    num_dirty_pages++;
+                }
+                //Atualiza a tabela de páginas e a memória com o processo que não está presente
+                tabela_de_paginas[frame_replaced].referencia = 0;
+                tabela_de_paginas[frame_replaced].ultimo_acesso = 0;
+                tabela_de_paginas[frame_replaced].suja = 0;
+                printf("Pagina %d replaced\n", frame_replaced);
+        }          
+            // Atualiza a tabela de páginas
+            int aux = -1;
+                for(int i = 0; i <numero_quadros; i++){
+                if(memoria_fisica[i].indice == indice_pagina){
+                    aux = i;
+                }
+                tabela_de_paginas[indice_pagina].referencia = 1;
+                tabela_de_paginas[indice_pagina].ultimo_acesso = current_time;
+                tabela_de_paginas[indice_pagina].quadro = aux;
+                }
     };
 
     // Função para apresentar o relatório com parâmetros de entrada e estatísitcas geradas durante a execução do simulador
-    relatorio_estatisticas(arquivo_entrada_memoria, tamanho_quadro_memoria, tamanho_memoria_total, algoritmo_substitucao, acessos_totais,
-                            acessos_leitura, acessos_escrita);
+    relatorio_estatisticas(arquivo_entrada_memoria, tamanho_quadro_memoria, tamanho_memoria_total, algoritmo_substituicao, acessos_totais,
+                            acessos_leitura, acessos_escrita, num_page_faults,num_dirty_pages);
 
     // Liberar a memória alocada
-    free(page_table);
-    free(physical_memory);
+    free(tabela_de_paginas);
+    free(memoria_fisica);
 
     // Fechamento do arquivo
     fclose(fptr);
