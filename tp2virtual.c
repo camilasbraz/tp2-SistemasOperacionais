@@ -17,6 +17,7 @@ typedef struct {
     int referencia;       // Flag para indicar se a página está na memória física
     int ultimo_acesso;    // Tempo do último acesso à página
     int suja;             // Flag que indica se a página está limpa ou suja
+    int bit_ref; // flag q indica se a pagina ja foi rerenciada ou nao
 } Pagina;
 
 void check_algoritmo_substituicao(char *algoritmo_check) {
@@ -184,24 +185,27 @@ int random_replacement(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int in
 
 int segunda_chance_replacement(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int indice_pagina, int numero_quadros) {
     // Implementação do algoritmo Segunda Chance (Second Chance)
-    int frame_replaced = -1;
+    int subs = 0;
+    int current_frame =-1;
     int i = 0;
 
-    while (frame_replaced == -1) {
-        int current_frame = memoria_fisica[i].indice;
-        if (tabela_de_paginas[current_frame].referencia == 0) {
-            frame_replaced = current_frame;
+    while (subs == 0) {
+        // Encontrar a página do próximo FIFO
+        current_frame = memoria_fisica[i].indice;
+
+        if (tabela_de_paginas[current_frame].bit_ref == 1) {
+            tabela_de_paginas[current_frame].bit_ref = 0;
         } else {
-            tabela_de_paginas[current_frame].referencia = 0;
+            subs = 1;
+            // Substituir o quadro selecionado pelo novo
+            memoria_fisica[i].indice = indice_pagina;
         }
 
         i = (i + 1) % numero_quadros;  // Circular para o próximo quadro
     }
 
-    // Substituir o quadro selecionado pelo novo
-    memoria_fisica[frame_replaced].indice = indice_pagina;
 
-    return frame_replaced;
+    return current_frame;
 }
 
 int main (int argc, char *argv[]){
@@ -287,7 +291,10 @@ int main (int argc, char *argv[]){
     int current_time = 0;
 
     // Seed para geração de números aleatórios
-    srand(time(NULL));
+
+
+    // Definir a semente para a função srand()
+    srand(42);
 
     // Variáveis para coletar estatísticas
     int acessos_totais = 0;
@@ -295,6 +302,9 @@ int main (int argc, char *argv[]){
     int acessos_escrita = 0;
     int num_page_faults = 0;
     int num_dirty_pages = 0;
+
+    int debug = 1;
+    int limte_linhas = 501;
 
     printf("Executando simulador ...\n");
     // Loop principal para processar os acessos à memória
@@ -304,24 +314,29 @@ int main (int argc, char *argv[]){
         acessos_totais++;
         // Incrementa o contador de tempo
         current_time++;
-        //printf("Operação: %c\n", rw);
+        int indice_pagina = determinar_pagina(tamanho_quadro_memoria, addr);
+
+        tabela_de_paginas[indice_pagina].bit_ref = 1;
+
         // Lê o endereço e a operação (R ou W)
+        // Em um sistema real, sempre que uma operação de escrita é realizada em uma página na memória, o bit de "dirty" (ou suja)
         if (rw == 'W' || rw == 'w' ) {
         acessos_escrita++;
+        tabela_de_paginas[indice_pagina].suja = 1;
         }  
         if (rw == 'R'|| rw == 'r') {
         acessos_leitura++;
         }   
-        
-        int indice_pagina = determinar_pagina(tamanho_quadro_memoria, addr);
-        //printf("Acessing page: %d\n", indice_pagina);
-        //printf("Page ref: %d\n", tabela_de_paginas[page].referencia);
-
+        if (debug){
+            if(acessos_totais == limte_linhas){
+                break;
+            }
+            printf("Linhas lidas: %d\n", acessos_totais);
+            printf("Acessing page: %d\n", indice_pagina);
+        }
         // Verifica se a página está na memória física
         if (tabela_de_paginas[indice_pagina].referencia != 0){
 
-            
-            //printf("Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: %d\n", aux);
             // página na memória física
             // atualiza ultimo acesso
             int aux = -1;
@@ -330,39 +345,42 @@ int main (int argc, char *argv[]){
                     aux = i;
                 }
             }
+            if (debug){
+            printf("Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: %d\n", aux);
+            }
+
             tabela_de_paginas[indice_pagina].ultimo_acesso = current_time;
             memoria_fisica[aux].ultimo_acesso = current_time;  
-            if(rw == 'W'){
-                //Teve que ser escrita de volta no disco
-                // Operação de escrita em página na memória física
-                num_dirty_pages++;
-                tabela_de_paginas[indice_pagina].suja = 1;
-            }
-            
         } else {
+            if (debug){
+            printf("Pagina nao esta na memoria fisica! Page fault\n");
+            }
             // pagina não está na memória física
-            // printf("Pagina nao esta na memoria fisica! Page fault\n");
             num_page_faults++;
 
             // Verifica se há um quadro vazio na memória física
             int found_empty_frame = -1;
             for (int i = 0; i < numero_quadros; i++) {
             //printf("Memoria física no quadro %d está livre? %d\n",i, memoria_fisica[i].ocupado);
+            
                 if (memoria_fisica[i].ocupado == 0) {
-                    //printf("Quadro vazio encontrado! ");
-                    //("Memoria alocada ao quadro: %d\n", i);
-                    // atualiza memoria fisica
-                    memoria_fisica[i].ocupado = 1;
-                    memoria_fisica[i].indice = indice_pagina;
-                    memoria_fisica[i].ultimo_acesso = current_time;
-                    found_empty_frame = 1;
-                    break;
+                    if (debug){
+                        printf("Quadro vazio encontrado! Memoria alocada ao quadro: %d\n", i);
+                    }
+                // atualiza memoria fisica
+                memoria_fisica[i].ocupado = 1;
+                memoria_fisica[i].indice = indice_pagina;
+                memoria_fisica[i].ultimo_acesso = current_time;
+                found_empty_frame = 1;
+                break;
                 }
             }
             // Se não há um quadro vazio, utiliza o algoritmo de substituição correspondente  
             int frame_replaced = -1;             
             if (found_empty_frame == -1) {
-                //printf("Sem quadro vazio! Vamos usar uma técnica de reposição\n");
+                if (debug){
+               printf("Sem quadro vazio! Vamos usar uma técnica de reposição\n");
+                }
                 if (strcmp(algoritmo_substituicao, "fifo") == 0) {
                     frame_replaced = fifo_replacement(tabela_de_paginas, memoria_fisica, indice_pagina, numero_quadros);
                 } else if (strcmp(algoritmo_substituicao, "lru") == 0) {
@@ -373,7 +391,7 @@ int main (int argc, char *argv[]){
                     frame_replaced = segunda_chance_replacement(tabela_de_paginas, memoria_fisica, indice_pagina, numero_quadros);
                 } 
 
-                if(tabela_de_paginas[frame_replaced].suja == 1 && rw == 'W'){
+                if(tabela_de_paginas[frame_replaced].suja == 1){
                      //Teve que ser escrita de volta no disco
                     // Operação de escrita em página na memória física
                     num_dirty_pages++;
@@ -382,24 +400,20 @@ int main (int argc, char *argv[]){
                 //Atualiza a tabela de páginas e a memória com o processo que não está presente
                 tabela_de_paginas[frame_replaced].referencia = 0;
                 tabela_de_paginas[frame_replaced].ultimo_acesso = 0;
-                //tabela_de_paginas[frame_replaced].suja = 0;
-                //printf("Frame %d replaced\n", frame_replaced);
-            }
+                tabela_de_paginas[frame_replaced].suja = 0;
+                tabela_de_paginas[frame_replaced].bit_ref = 0;
 
+                if (debug){
+                    printf("Frame %d replaced\n", frame_replaced);
+                }
+            }
             // Atualiza a tabela de páginas
             tabela_de_paginas[indice_pagina].referencia = 1;
-            tabela_de_paginas[indice_pagina].ultimo_acesso = current_time;
-            if(rw == 'W'){
-                tabela_de_paginas[indice_pagina].suja = 1;
-                }
-
-            //printf("Dirty\n");
-            //Página fica suja!
-           // tabela_de_paginas[indice_pagina].suja = 1;         
+           // tabela_de_paginas[indice_pagina].bit_ref = 1;
+            tabela_de_paginas[indice_pagina].ultimo_acesso = current_time;        
         }             
                 
     };
-
     // Função para apresentar o relatório com parâmetros de entrada e estatísitcas geradas durante a execução do simulador
     relatorio_estatisticas(arquivo_entrada_memoria, tamanho_quadro_memoria, tamanho_memoria_total, algoritmo_substituicao, acessos_totais,
                             acessos_leitura, acessos_escrita, num_page_faults,num_dirty_pages);

@@ -1,0 +1,1704 @@
+gcc tp2virtual.c -o tp2virtual -lm
+./tp2virtual 2a compilador.log 32 128
+Executando o programa ./tp2virtual
+--------------------------------
+Executando simulador ...
+Linhas lidas: 1
+Acessing page: 3940
+Pagina nao esta na memoria fisica! Page fault
+Quadro vazio encontrado! Memoria alocada ao quadro: 0
+Linhas lidas: 2
+Acessing page: 69
+Pagina nao esta na memoria fisica! Page fault
+Quadro vazio encontrado! Memoria alocada ao quadro: 1
+Linhas lidas: 3
+Acessing page: 69
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 4
+Acessing page: 3940
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 5
+Acessing page: 34
+Pagina nao esta na memoria fisica! Page fault
+Quadro vazio encontrado! Memoria alocada ao quadro: 2
+Linhas lidas: 6
+Acessing page: 63
+Pagina nao esta na memoria fisica! Page fault
+Quadro vazio encontrado! Memoria alocada ao quadro: 3
+Linhas lidas: 7
+Acessing page: 34
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 8
+Acessing page: 63
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 9
+Acessing page: 34
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 10
+Acessing page: 34
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 11
+Acessing page: 69
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 12
+Acessing page: 34
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 13
+Acessing page: 34
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 14
+Acessing page: 69
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 15
+Acessing page: 34
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 16
+Acessing page: 65
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 3940 replaced
+Linhas lidas: 17
+Acessing page: 65
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 18
+Acessing page: 34
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 19
+Acessing page: 34
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 20
+Acessing page: 50
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 69 replaced
+Linhas lidas: 21
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 22
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 23
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 24
+Acessing page: 65
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 25
+Acessing page: 3069
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 63 replaced
+Linhas lidas: 26
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 27
+Acessing page: 65
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 28
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 29
+Acessing page: 73
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 34 replaced
+Linhas lidas: 30
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 31
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 32
+Acessing page: 154
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 65 replaced
+Linhas lidas: 33
+Acessing page: 65
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 154 replaced
+Linhas lidas: 34
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 35
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 36
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 37
+Acessing page: 73
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 38
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 39
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 40
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 41
+Acessing page: 154
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 3069 replaced
+Linhas lidas: 42
+Acessing page: 65
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 43
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 44
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 45
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 46
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 47
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 48
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 49
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 50
+Acessing page: 7674
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 73 replaced
+Linhas lidas: 51
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 52
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 53
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 54
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 55
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 56
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 57
+Acessing page: 71
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 65 replaced
+Linhas lidas: 58
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 59
+Acessing page: 71
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 60
+Acessing page: 154
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 61
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 62
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 63
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 64
+Acessing page: 154
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 65
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 66
+Acessing page: 66
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 71 replaced
+Linhas lidas: 67
+Acessing page: 57
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 50 replaced
+Linhas lidas: 68
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 69
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 70
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 71
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 72
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 73
+Acessing page: 72
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 66 replaced
+Linhas lidas: 74
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 75
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 76
+Acessing page: 72
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 77
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 78
+Acessing page: 0
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 7674 replaced
+Linhas lidas: 79
+Acessing page: 0
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 80
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 81
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 82
+Acessing page: 50
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 72 replaced
+Linhas lidas: 83
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 84
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 85
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 86
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 87
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 88
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 89
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 90
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 91
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 92
+Acessing page: 23
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 154 replaced
+Linhas lidas: 93
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 94
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 95
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 96
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 97
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 98
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 99
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 100
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 101
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 102
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 103
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 104
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 105
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 106
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 107
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 108
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 109
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 110
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 111
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 112
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 113
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 114
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 115
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 116
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 117
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 118
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 119
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 120
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 121
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 122
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 123
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 124
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 125
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 126
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 127
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 128
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 129
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 130
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 131
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 132
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 133
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 134
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 135
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 136
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 137
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 138
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 139
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 140
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 141
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 142
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 143
+Acessing page: 8058
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 0 replaced
+Linhas lidas: 144
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 145
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 146
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 147
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 148
+Acessing page: 3069
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 50 replaced
+Linhas lidas: 149
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 150
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 151
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 152
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 153
+Acessing page: 3069
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 154
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 155
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 156
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 157
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 158
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 159
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 160
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 161
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 162
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 163
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 164
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 165
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 166
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 167
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 168
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 169
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 170
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 171
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 172
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 173
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 174
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 175
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 176
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 177
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 178
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 179
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 180
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 181
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 182
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 183
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 184
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 185
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 186
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 187
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 188
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 189
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 190
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 191
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 192
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 193
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 194
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 195
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 196
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 197
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 198
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 199
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 200
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 201
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 202
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 203
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 204
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 205
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 206
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 207
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 208
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 209
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 210
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 211
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 212
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 213
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 214
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 215
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 216
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 217
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 218
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 219
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 220
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 221
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 222
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 223
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 224
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 225
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 226
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 227
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 228
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 229
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 230
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 231
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 232
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 233
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 234
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 235
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 236
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 237
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 238
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 239
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 240
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 241
+Acessing page: 0
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 3069 replaced
+Linhas lidas: 242
+Acessing page: 0
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 243
+Acessing page: 50
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 57 replaced
+Linhas lidas: 244
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 245
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 246
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 247
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 248
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 249
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 250
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 251
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 252
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 253
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 254
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 255
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 256
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 257
+Acessing page: 154
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 0 replaced
+Linhas lidas: 258
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 259
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 260
+Acessing page: 23
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 261
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 262
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 263
+Acessing page: 57
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 8058 replaced
+Linhas lidas: 264
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 265
+Acessing page: 0
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 154 replaced
+Linhas lidas: 266
+Acessing page: 0
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 267
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 268
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 269
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 270
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 271
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 272
+Acessing page: 73
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 50 replaced
+Linhas lidas: 273
+Acessing page: 62
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 0 replaced
+Linhas lidas: 274
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 275
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 276
+Acessing page: 50
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 62 replaced
+Linhas lidas: 277
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 278
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 279
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 280
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 281
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 282
+Acessing page: 50
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 283
+Acessing page: 34
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 73 replaced
+Linhas lidas: 284
+Acessing page: 8072
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 50 replaced
+Linhas lidas: 285
+Acessing page: 8072
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 286
+Acessing page: 8072
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 287
+Acessing page: 8072
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 288
+Acessing page: 8072
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 289
+Acessing page: 34
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 290
+Acessing page: 34
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 291
+Acessing page: 3940
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 57 replaced
+Linhas lidas: 292
+Acessing page: 0
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 8072 replaced
+Linhas lidas: 293
+Acessing page: 36
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 34 replaced
+Linhas lidas: 294
+Acessing page: 36
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 295
+Acessing page: 36
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 296
+Acessing page: 36
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 297
+Acessing page: 36
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 298
+Acessing page: 36
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 299
+Acessing page: 36
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 300
+Acessing page: 36
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 301
+Acessing page: 36
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 302
+Acessing page: 36
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 303
+Acessing page: 54
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 0 replaced
+Linhas lidas: 304
+Acessing page: 54
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 305
+Acessing page: 8072
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 23 replaced
+Linhas lidas: 306
+Acessing page: 501
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 54 replaced
+Linhas lidas: 307
+Acessing page: 8072
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 308
+Acessing page: 8072
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 309
+Acessing page: 8072
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 310
+Acessing page: 8072
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 311
+Acessing page: 63
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 36 replaced
+Linhas lidas: 312
+Acessing page: 503
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 501 replaced
+Linhas lidas: 313
+Acessing page: 8072
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 314
+Acessing page: 8072
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 315
+Acessing page: 33
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 3940 replaced
+Linhas lidas: 316
+Acessing page: 3069
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 503 replaced
+Linhas lidas: 317
+Acessing page: 8072
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 318
+Acessing page: 8072
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 319
+Acessing page: 8074
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 63 replaced
+Linhas lidas: 320
+Acessing page: 34
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 3069 replaced
+Linhas lidas: 321
+Acessing page: 34
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 322
+Acessing page: 8074
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 323
+Acessing page: 34
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 324
+Acessing page: 34
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 325
+Acessing page: 34
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 326
+Acessing page: 34
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 327
+Acessing page: 34
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 328
+Acessing page: 34
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 329
+Acessing page: 8074
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 330
+Acessing page: 8074
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 331
+Acessing page: 4018
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 34 replaced
+Linhas lidas: 332
+Acessing page: 4018
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 333
+Acessing page: 34
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 8074 replaced
+Linhas lidas: 334
+Acessing page: 34
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 335
+Acessing page: 34
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 336
+Acessing page: 34
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 337
+Acessing page: 40
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 4018 replaced
+Linhas lidas: 338
+Acessing page: 40
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 339
+Acessing page: 36
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 33 replaced
+Linhas lidas: 340
+Acessing page: 36
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 341
+Acessing page: 36
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 342
+Acessing page: 8072
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 343
+Acessing page: 36
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 344
+Acessing page: 36
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 345
+Acessing page: 37
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 40 replaced
+Linhas lidas: 346
+Acessing page: 8138
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 34 replaced
+Linhas lidas: 347
+Acessing page: 37
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 348
+Acessing page: 37
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 349
+Acessing page: 8072
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 350
+Acessing page: 36
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 351
+Acessing page: 8072
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 352
+Acessing page: 8074
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 37 replaced
+Linhas lidas: 353
+Acessing page: 8065
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 8138 replaced
+Linhas lidas: 354
+Acessing page: 8136
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 8074 replaced
+Linhas lidas: 355
+Acessing page: 8136
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 356
+Acessing page: 8074
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 36 replaced
+Linhas lidas: 357
+Acessing page: 8073
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 8136 replaced
+Linhas lidas: 358
+Acessing page: 3069
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 8065 replaced
+Linhas lidas: 359
+Acessing page: 7958
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 8073 replaced
+Linhas lidas: 360
+Acessing page: 8136
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 8072 replaced
+Linhas lidas: 361
+Acessing page: 4016
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 7958 replaced
+Linhas lidas: 362
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 363
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 364
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 365
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 366
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 367
+Acessing page: 7958
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 3069 replaced
+Linhas lidas: 368
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 369
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 370
+Acessing page: 4018
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 8074 replaced
+Linhas lidas: 371
+Acessing page: 4018
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 372
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 373
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 374
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 375
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 376
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 377
+Acessing page: 7958
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 378
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 379
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 380
+Acessing page: 7958
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 381
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 382
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 383
+Acessing page: 4018
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 384
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 385
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 386
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 387
+Acessing page: 8065
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 4016 replaced
+Linhas lidas: 388
+Acessing page: 3069
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 7958 replaced
+Linhas lidas: 389
+Acessing page: 8131
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 8065 replaced
+Linhas lidas: 390
+Acessing page: 8131
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 391
+Acessing page: 8131
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 392
+Acessing page: 4016
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 4018 replaced
+Linhas lidas: 393
+Acessing page: 8131
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 394
+Acessing page: 8131
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 395
+Acessing page: 8131
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 396
+Acessing page: 8131
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 397
+Acessing page: 8131
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 398
+Acessing page: 8131
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 399
+Acessing page: 4018
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 3069 replaced
+Linhas lidas: 400
+Acessing page: 8131
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 401
+Acessing page: 8131
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 402
+Acessing page: 4018
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 403
+Acessing page: 8131
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 404
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 405
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 406
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 407
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 408
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 409
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 410
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 411
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 412
+Acessing page: 4018
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 413
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 414
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 415
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 416
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 417
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 418
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 419
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 420
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 421
+Acessing page: 7958
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 8136 replaced
+Linhas lidas: 422
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 423
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 424
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 425
+Acessing page: 7958
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 426
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 427
+Acessing page: 4018
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 428
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 429
+Acessing page: 3068
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 8131 replaced
+Linhas lidas: 430
+Acessing page: 8065
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 3068 replaced
+Linhas lidas: 431
+Acessing page: 8065
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 432
+Acessing page: 8128
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 4018 replaced
+Linhas lidas: 433
+Acessing page: 8128
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 434
+Acessing page: 7958
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 435
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 436
+Acessing page: 4363
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 8065 replaced
+Linhas lidas: 437
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 438
+Acessing page: 8065
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 4363 replaced
+Linhas lidas: 439
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 440
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 441
+Acessing page: 4049
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 8128 replaced
+Linhas lidas: 442
+Acessing page: 4049
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 443
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 444
+Acessing page: 4018
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 8065 replaced
+Linhas lidas: 445
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 446
+Acessing page: 8065
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 7958 replaced
+Linhas lidas: 447
+Acessing page: 8115
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 4018 replaced
+Linhas lidas: 448
+Acessing page: 8115
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 449
+Acessing page: 8115
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 450
+Acessing page: 63
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 4049 replaced
+Linhas lidas: 451
+Acessing page: 34
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 8115 replaced
+Linhas lidas: 452
+Acessing page: 34
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 453
+Acessing page: 34
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 454
+Acessing page: 57
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 4016 replaced
+Linhas lidas: 455
+Acessing page: 57
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 456
+Acessing page: 3069
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 34 replaced
+Linhas lidas: 457
+Acessing page: 34
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 63 replaced
+Linhas lidas: 458
+Acessing page: 8115
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 3069 replaced
+Linhas lidas: 459
+Acessing page: 4016
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 8115 replaced
+Linhas lidas: 460
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 461
+Acessing page: 4018
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 34 replaced
+Linhas lidas: 462
+Acessing page: 4016
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 463
+Acessing page: 508
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 57 replaced
+Linhas lidas: 464
+Acessing page: 508
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 465
+Acessing page: 508
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 466
+Acessing page: 8128
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 4016 replaced
+Linhas lidas: 467
+Acessing page: 8128
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 468
+Acessing page: 4049
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 4018 replaced
+Linhas lidas: 469
+Acessing page: 8128
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 470
+Acessing page: 8065
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 471
+Acessing page: 508
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 472
+Acessing page: 508
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 473
+Acessing page: 508
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 474
+Acessing page: 4049
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 475
+Acessing page: 8065
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 3
+Linhas lidas: 476
+Acessing page: 7958
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 8128 replaced
+Linhas lidas: 477
+Acessing page: 8115
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 4049 replaced
+Linhas lidas: 478
+Acessing page: 8115
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 479
+Acessing page: 8115
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 480
+Acessing page: 8115
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 481
+Acessing page: 7958
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 482
+Acessing page: 8115
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 483
+Acessing page: 8115
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 484
+Acessing page: 4049
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 508 replaced
+Linhas lidas: 485
+Acessing page: 8115
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 486
+Acessing page: 8115
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 487
+Acessing page: 8115
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 488
+Acessing page: 8115
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 489
+Acessing page: 7958
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 490
+Acessing page: 8115
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 491
+Acessing page: 8115
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 1
+Linhas lidas: 492
+Acessing page: 7761
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 8065 replaced
+Linhas lidas: 493
+Acessing page: 8128
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 7958 replaced
+Linhas lidas: 494
+Acessing page: 8128
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 495
+Acessing page: 4049
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 2
+Linhas lidas: 496
+Acessing page: 8128
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 497
+Acessing page: 8065
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 8115 replaced
+Linhas lidas: 498
+Acessing page: 507
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 8128 replaced
+Linhas lidas: 499
+Acessing page: 507
+Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: 0
+Linhas lidas: 500
+Acessing page: 7958
+Pagina nao esta na memoria fisica! Page fault
+Sem quadro vazio! Vamos usar uma técnica de reposição
+Frame 507 replaced
+--------------------------------
+Parametros de entrada:
+Arquivo de entrada: compilador.log
+Tamanho da memoria: 128 KB
+Tamanho das páginas: 32 KB
+Tecnica de reposição: 2a
+--------------------------------
+Estatísitcas:
+Acessos totais à memória: 501
+Acessos leitura: 370
+Acessos escrita: 131
+Page faults: 94
+Dirty pages: 14
+--------------------------------
+rm -f tp2virtual
