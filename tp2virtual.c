@@ -134,20 +134,20 @@ int determinar_pagina(int tamanho_quadro_memoria, unsigned addr){
     return pagina;
  }
 
-int fifo_replacement(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int indice_pagina, int numero_quadros) {
+int substituicao_fifo(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int indice_pagina, int numero_quadros) {
     // Implementação do algoritmo FIFO (First-In, First-Out)
-    int frame_replaced = memoria_fisica[0].indice;
-    //printf("Fifo replacement: %d\n", frame_replaced);
+    int pagina_reposta = memoria_fisica[0].indice;
+    //printf("Fifo replacement: %d\n", pagina_reposta);
     // Deslocar todos os quadros para a esquerda
     for (int i = 1; i < numero_quadros; i++) {
         memoria_fisica[i - 1].indice = memoria_fisica[i].indice;
     }
     // Substituir o último quadro pelo novo
     memoria_fisica[numero_quadros - 1].indice = indice_pagina;
-    return frame_replaced;
+    return pagina_reposta;
 }
 
-int lru_replacement(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int indice_pagina, int numero_quadros, int tempo_atual) {
+int substituicao_lru(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int indice_pagina, int numero_quadros, int tempo_atual) {
     // Implementação do algoritmo LRU (Least Recently Used)
     // This variable will keep track of the index of the frame with the least recently used page.
     int min_index = 0;
@@ -164,29 +164,29 @@ int lru_replacement(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int indic
         }
     }
 
-    int frame_replaced = memoria_fisica[min_index].indice;
+    int pagina_reposta = memoria_fisica[min_index].indice;
 
     // Substituir o quadro encontrado pelo novo
     memoria_fisica[min_index].indice = indice_pagina;
     memoria_fisica[min_index].ultimo_acesso = tempo_atual;
 
-    return frame_replaced;
+    return pagina_reposta;
 }
-int random_replacement(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int indice_pagina, int numero_quadros) {
+int substituicao_random(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int indice_pagina, int numero_quadros) {
     // Implementação do algoritmo aleatório
     int random_position = rand() % numero_quadros;
-    int frame_replaced = memoria_fisica[random_position].indice;
+    int pagina_reposta = memoria_fisica[random_position].indice;
 
     // Substituir um quadro aleatório pelo novo
     memoria_fisica[random_position].indice = indice_pagina;
 
-    return frame_replaced;
+    return pagina_reposta;
 }
 
-int segunda_chance_replacement(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int indice_pagina, int numero_quadros) {
+int substituicao_segunda_chance(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int indice_pagina, int numero_quadros) {
     // Implementação do algoritmo Segunda Chance (Second Chance)
     int subs = 0;
-    int current_frame =-1;
+    int current_frame = -1; 
     int i = 0;
 
     while (subs == 0) {
@@ -215,10 +215,21 @@ int main (int argc, char *argv[]){
     printf("--------------------------------\n");
 
     // Validar o número de parâmetros de entrada (linha de comando)
-    if(argc != 5){
-        printf("O programa requer 4 entradas. Favor executar novamente com o número correto de parâmetros!\n");
-        exit(0);
+    if(argc < 5){
+        printf("O programa requer 4 entradas obrigatórias. Favor executar novamente com o número correto de parâmetros!\n");
+        exit(1);
     };
+    if(argc > 6){
+        printf("O programa requer no máximo 5 entradas obrigatórias. Favor executar novamente com o número correto de parâmetros!\n");
+        exit(1);
+    };
+
+    // Variaveis para rodar o programa no modo debug
+    int debug = 0;
+    int limte_linhas = 501;
+    if (argc == 6 && strcmp(argv[5],"debug") == 0){
+        debug = 1;  
+    }
     
     // Parâmetros de entrada (linha de comando)
     // Os parâmetros argv[1] e argv[2] são transformados para o lowercase (função tolower()) para facilitar a conferência
@@ -288,11 +299,9 @@ int main (int argc, char *argv[]){
     }
 
     // Variáveis de controle de ultimo acesso
-    int current_time = 0;
+    int clock = 0;
 
     // Seed para geração de números aleatórios
-
-
     // Definir a semente para a função srand()
     srand(42);
 
@@ -303,8 +312,6 @@ int main (int argc, char *argv[]){
     int num_page_faults = 0;
     int num_dirty_pages = 0;
 
-    int debug = 1;
-    int limte_linhas = 501;
 
     printf("Executando simulador ...\n");
     // Loop principal para processar os acessos à memória
@@ -312,8 +319,9 @@ int main (int argc, char *argv[]){
     char rw;
     while (fscanf(fptr, "%x %c\n", &addr, &rw) == 2) {
         acessos_totais++;
+        
         // Incrementa o contador de tempo
-        current_time++;
+        clock++;
         int indice_pagina = determinar_pagina(tamanho_quadro_memoria, addr);
 
         tabela_de_paginas[indice_pagina].bit_ref = 1;
@@ -336,7 +344,6 @@ int main (int argc, char *argv[]){
         }
         // Verifica se a página está na memória física
         if (tabela_de_paginas[indice_pagina].referencia != 0){
-
             // página na memória física
             // atualiza ultimo acesso
             int aux = -1;
@@ -349,8 +356,8 @@ int main (int argc, char *argv[]){
             printf("Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: %d\n", aux);
             }
 
-            tabela_de_paginas[indice_pagina].ultimo_acesso = current_time;
-            memoria_fisica[aux].ultimo_acesso = current_time;  
+            tabela_de_paginas[indice_pagina].ultimo_acesso = clock;
+            memoria_fisica[aux].ultimo_acesso = clock;  
         } else {
             if (debug){
             printf("Pagina nao esta na memoria fisica! Page fault\n");
@@ -359,7 +366,7 @@ int main (int argc, char *argv[]){
             num_page_faults++;
 
             // Verifica se há um quadro vazio na memória física
-            int found_empty_frame = -1;
+            int quadro_vazio = -1;
             for (int i = 0; i < numero_quadros; i++) {
             //printf("Memoria física no quadro %d está livre? %d\n",i, memoria_fisica[i].ocupado);
             
@@ -370,47 +377,45 @@ int main (int argc, char *argv[]){
                 // atualiza memoria fisica
                 memoria_fisica[i].ocupado = 1;
                 memoria_fisica[i].indice = indice_pagina;
-                memoria_fisica[i].ultimo_acesso = current_time;
-                found_empty_frame = 1;
+                memoria_fisica[i].ultimo_acesso = clock;
+                quadro_vazio = 1;
                 break;
                 }
             }
             // Se não há um quadro vazio, utiliza o algoritmo de substituição correspondente  
-            int frame_replaced = -1;             
-            if (found_empty_frame == -1) {
+            int pagina_reposta = -1;             
+            if (quadro_vazio == -1) {
                 if (debug){
                printf("Sem quadro vazio! Vamos usar uma técnica de reposição\n");
                 }
                 if (strcmp(algoritmo_substituicao, "fifo") == 0) {
-                    frame_replaced = fifo_replacement(tabela_de_paginas, memoria_fisica, indice_pagina, numero_quadros);
+                    pagina_reposta = substituicao_fifo(tabela_de_paginas, memoria_fisica, indice_pagina, numero_quadros);
                 } else if (strcmp(algoritmo_substituicao, "lru") == 0) {
-                    frame_replaced = lru_replacement(tabela_de_paginas, memoria_fisica, indice_pagina, numero_quadros, current_time);
+                    pagina_reposta = substituicao_lru(tabela_de_paginas, memoria_fisica, indice_pagina, numero_quadros, clock);
                 } else if (strcmp(algoritmo_substituicao, "random") == 0) {
-                    frame_replaced = random_replacement(tabela_de_paginas, memoria_fisica, indice_pagina, numero_quadros);
+                    pagina_reposta = substituicao_random(tabela_de_paginas, memoria_fisica, indice_pagina, numero_quadros);
                 } else if (strcmp(algoritmo_substituicao, "2a") == 0) {
-                    frame_replaced = segunda_chance_replacement(tabela_de_paginas, memoria_fisica, indice_pagina, numero_quadros);
+                    pagina_reposta = substituicao_segunda_chance(tabela_de_paginas, memoria_fisica, indice_pagina, numero_quadros);
                 } 
 
-                if(tabela_de_paginas[frame_replaced].suja == 1){
+                if(tabela_de_paginas[pagina_reposta].suja == 1){
                      //Teve que ser escrita de volta no disco
                     // Operação de escrita em página na memória física
                     num_dirty_pages++;
                 }
 
                 //Atualiza a tabela de páginas e a memória com o processo que não está presente
-                tabela_de_paginas[frame_replaced].referencia = 0;
-                tabela_de_paginas[frame_replaced].ultimo_acesso = 0;
-                tabela_de_paginas[frame_replaced].suja = 0;
-                tabela_de_paginas[frame_replaced].bit_ref = 0;
-
+                tabela_de_paginas[pagina_reposta].referencia = 0;
+                tabela_de_paginas[pagina_reposta].ultimo_acesso = 0;
+                tabela_de_paginas[pagina_reposta].suja = 0;
+                tabela_de_paginas[pagina_reposta].bit_ref = 0;
                 if (debug){
-                    printf("Frame %d replaced\n", frame_replaced);
+                    printf("Pagina %d substituida\n", pagina_reposta);
                 }
             }
             // Atualiza a tabela de páginas
             tabela_de_paginas[indice_pagina].referencia = 1;
-           // tabela_de_paginas[indice_pagina].bit_ref = 1;
-            tabela_de_paginas[indice_pagina].ultimo_acesso = current_time;        
+            tabela_de_paginas[indice_pagina].ultimo_acesso = clock;        
         }             
                 
     };
