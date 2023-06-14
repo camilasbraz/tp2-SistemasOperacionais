@@ -1,0 +1,19 @@
+./tp2virtual fifo compilador.log 4 128
+Executando o programa ./tp2virtual
+--------------------------------
+Executando simulador ...
+--------------------------------
+Parametros de entrada:
+Arquivo de entrada: compilador.log
+Tamanho da memoria: 128 KB
+Tamanho das páginas: 4 KB
+Tecnica de reposição: fifo
+--------------------------------
+Estatísitcas:
+Acessos totais à memória: 1000000
+Acessos leitura: 892816
+Acessos escrita: 107184
+Page faults: 98067
+Páginas escritas: 16759
+--------------------------------
+rm -f tp2virtual
