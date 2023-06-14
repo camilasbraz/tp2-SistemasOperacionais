@@ -8,7 +8,7 @@ $(TARGET): tp2virtual.c
 	$(CC) tp2virtual.c -o $(TARGET) $(CFLAGS)
 
 run: $(TARGET)
-	./$(TARGET) 2a compilador.log 32 128 debug
+	./$(TARGET) fifo compilador.log 4 128
 
 clean:
 	rm -f $(TARGET)

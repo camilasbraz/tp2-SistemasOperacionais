@@ -5,6 +5,10 @@
 #include <math.h>
 #include <time.h>
 
+// Variaveis globais
+// proximo fifo é utilizado na substituição fifo
+int proximo_fifo = 0;
+
 // Estrutura para representar um quadro de memoria na memória física
 typedef struct {
     int indice;           // Número da página que ocupa o quadro
@@ -107,7 +111,7 @@ void relatorio_estatisticas(char *arquivo_entrada, int tamanho_quadro, int taman
     printf("Acessos leitura: %d\n", acessos_leitura);
     printf("Acessos escrita: %d\n", acessos_escrita);
     printf("Page faults: %d\n", num_page_faults);
-    printf("Dirty pages: %d\n", num_dirty_pages);
+    printf("Páginas escritas: %d\n", num_dirty_pages);
     printf("--------------------------------\n");
 }
 
@@ -187,24 +191,22 @@ int substituicao_segunda_chance(Pagina *tabela_de_paginas, Quadro *memoria_fisic
     // Implementação do algoritmo Segunda Chance (Second Chance)
     int subs = 0;
     int current_frame = -1; 
-    int i = 0;
+    //int i = proximo_fifo;
 
     while (subs == 0) {
         // Encontrar a página do próximo FIFO
-        current_frame = memoria_fisica[i].indice;
+        current_frame = memoria_fisica[proximo_fifo].indice;
 
         if (tabela_de_paginas[current_frame].bit_ref == 1) {
+            // Pagina ganha uma segunda chance
             tabela_de_paginas[current_frame].bit_ref = 0;
+            proximo_fifo =  (proximo_fifo + 1) % numero_quadros;  // Circular para o próximo quadro
         } else {
             subs = 1;
             // Substituir o quadro selecionado pelo novo
-            memoria_fisica[i].indice = indice_pagina;
+            memoria_fisica[proximo_fifo].indice = indice_pagina;
         }
-
-        i = (i + 1) % numero_quadros;  // Circular para o próximo quadro
     }
-
-
     return current_frame;
 }
 
@@ -303,7 +305,7 @@ int main (int argc, char *argv[]){
 
     // Seed para geração de números aleatórios
     // Definir a semente para a função srand()
-    srand(42);
+    srand(123456);
 
     // Variáveis para coletar estatísticas
     int acessos_totais = 0;
@@ -415,7 +417,8 @@ int main (int argc, char *argv[]){
             }
             // Atualiza a tabela de páginas
             tabela_de_paginas[indice_pagina].referencia = 1;
-            tabela_de_paginas[indice_pagina].ultimo_acesso = clock;        
+            tabela_de_paginas[indice_pagina].ultimo_acesso = clock;  
+            //tabela_de_paginas[indice_pagina].bit_ref = 1;      
         }             
                 
     };
