@@ -6,7 +6,7 @@
 #include <time.h>
 
 // Variaveis globais
-// proximo fifo é utilizado na substituição fifo
+// proximo fifo é utilizado no algorirmo de substituição segunda chance
 int proximo_fifo = 0;
 
 // Estrutura para representar um quadro de memoria na memória física
@@ -115,100 +115,119 @@ void relatorio_estatisticas(char *arquivo_entrada, int tamanho_quadro, int taman
     printf("--------------------------------\n");
 }
 
-int determinar_pagina(int tamanho_quadro_memoria, unsigned addr){
-    // Na linha int page = addr >> (32 - s);, a variável s representa o número de bits menos significativos a serem descartados do endereço addr para obter
-    // o número da página correspondente.
-    // A expressão (32 - s) calcula a quantidade de bits a serem mantidos no endereço, considerando que um endereço tem 32 bits no total. Subtraindo o valor 
-    // de s de 32, obtemos a quantidade de bits a serem mantidos no endereço, que representa a parte relevante para determinar a página.
-    // O operador >> realiza um deslocamento à direita dos bits do endereço addr. O deslocamento é determinado pelo valor de (32 - s). Isso significa que os bits menos
-    // significativos (os s bits menos significativos) são descartados, e os bits restantes formam o número da página correspondente.
-    // Por exemplo, se s for igual a 12 (para páginas de 4KB), então (32 - s) será igual a 20. Isso significa que os 20 bits mais significativos do endereço addr 
-    // serão usados para determinar o número da página.
-    
-    // Calcular o valor de s
+int determinar_pagina(int tamanho_quadro_memoria, unsigned addr) {
     unsigned s, tmp;
-    tmp =  tamanho_quadro_memoria * 1024;
-    s = 0;
+
+    // Converte tamanho do quadro de memória de kilobytes para bytes
+    tmp = tamanho_quadro_memoria * 1024;  
+     // Variável para armazenar o número de bits necessários para representar o tamanho do quadro de memória
+    s = 0; 
+
     while (tmp > 1) {
-        tmp = tmp >> 1;
-        s++;
+        // Desloca o valor de 'tmp' uma posição para a direita (equivalente a dividir por 2)
+        tmp = tmp >> 1;  
+        // Incrementa 's' em 1 a cada iteração, contando o número de bits necessários para representar o tamanho do quadro
+        s++; 
     }
+
     // Calcula o número da página a partir do endereço de 32 bits
-    int pagina = addr >> s;
-    return pagina;
- }
+    int pagina = addr >> s;  // Desloca o endereço 'addr' para a direita em 's' posições (remove os bits menos significativos)
+    
+    // Retorna o número da página correspondente ao endereço
+    return pagina;  
+}
+
 
 int substituicao_fifo(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int indice_pagina, int numero_quadros) {
     // Implementação do algoritmo FIFO (First-In, First-Out)
-    int pagina_reposta = memoria_fisica[0].indice;
-    //printf("Fifo replacement: %d\n", pagina_reposta);
-    // Deslocar todos os quadros para a esquerda
+    // Armazena o índice da página que será substituída (a primeira página inserida)
+    int pagina_reposta = memoria_fisica[0].indice;  
+
+    // Desloca os índices das páginas uma posição para a esquerda
     for (int i = 1; i < numero_quadros; i++) {
-        memoria_fisica[i - 1].indice = memoria_fisica[i].indice;
+        memoria_fisica[i - 1].indice = memoria_fisica[i].indice;  
     }
-    // Substituir o último quadro pelo novo
-    memoria_fisica[numero_quadros - 1].indice = indice_pagina;
-    return pagina_reposta;
+
+    // Substitui o último quadro pelo novo
+    memoria_fisica[numero_quadros - 1].indice = indice_pagina; 
+
+    // Retorna o índice da página que foi substituída
+    return pagina_reposta;  
 }
+
 
 int substituicao_lru(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int indice_pagina, int numero_quadros, int tempo_atual) {
     // Implementação do algoritmo LRU (Least Recently Used)
-    // This variable will keep track of the index of the frame with the least recently used page.
-    int min_index = 0;
-    int min_access_time = memoria_fisica[0].ultimo_acesso;
-    
+    // Variável para armazenar o índice do quadro com a página menos recentemente utilizada
+    int min_index = 0;  
+    // Armazena o tempo de acesso da primeira página na memória física
+    int min_access_time = memoria_fisica[0].ultimo_acesso;  
 
-    // Encontrar o quadro com o menor tempo de acesso
-    // It checks if the next frame has a smaller ultimo_acesso value, indicating that it was accessed more recently.
+    // Encontrar o quadro com o menor tempo de acesso (página menos recentemente utilizada)
     for (int i = 1; i < numero_quadros; i++) {
-        //printf("Ultimo acesso controle: %d\n", min_access_time);
         if (memoria_fisica[i].ultimo_acesso < min_access_time) {
-            min_access_time = memoria_fisica[i].ultimo_acesso;
-            min_index = i;
+            // Atualiza o menor tempo de acesso
+            min_access_time = memoria_fisica[i].ultimo_acesso; 
+            // Armazena o índice do quadro com o menor tempo de acesso
+            min_index = i;  
         }
     }
 
-    int pagina_reposta = memoria_fisica[min_index].indice;
+    // Armazena o índice da página que será substituída
+    int pagina_reposta = memoria_fisica[min_index].indice;  
 
     // Substituir o quadro encontrado pelo novo
-    memoria_fisica[min_index].indice = indice_pagina;
-    memoria_fisica[min_index].ultimo_acesso = tempo_atual;
+    memoria_fisica[min_index].indice = indice_pagina;  
+    // Atualiza o tempo de acesso do quadro para o tempo atual
+    memoria_fisica[min_index].ultimo_acesso = tempo_atual;  
 
-    return pagina_reposta;
+    // Retorna o índice da página que foi substituída pelo algoritmo LRU
+    return pagina_reposta;  
 }
+
 int substituicao_random(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int indice_pagina, int numero_quadros) {
     // Implementação do algoritmo aleatório
-    int random_position = rand() % numero_quadros;
-    int pagina_reposta = memoria_fisica[random_position].indice;
+    // Gera uma posição aleatória dentro do número de quadros
+    int random_position = rand() % numero_quadros;  
+    // Armazena o índice da página que será substituída
+    int pagina_reposta = memoria_fisica[random_position].indice;  
 
-    // Substituir um quadro aleatório pelo novo
-    memoria_fisica[random_position].indice = indice_pagina;
+    // Substituir um quadro aleatório pelo novo índice
+    memoria_fisica[random_position].indice = indice_pagina;  
 
-    return pagina_reposta;
+    // Retorna o índice da página que foi substituída aleatoriamente
+    return pagina_reposta;  
 }
+
 
 int substituicao_segunda_chance(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int indice_pagina, int numero_quadros) {
     // Implementação do algoritmo Segunda Chance (Second Chance)
-    int subs = 0;
-    int current_frame = -1; 
-    //int i = proximo_fifo;
+    // Variável para indicar se ocorreu a substituição
+    int subs = 0;  
+    // Variável para armazenar o índice do quadro atual
+    int current_frame = -1;  
+    int teste = 0;
 
     while (subs == 0) {
         // Encontrar a página do próximo FIFO
-        current_frame = memoria_fisica[proximo_fifo].indice;
-
+        current_frame = memoria_fisica[teste].indice;
         if (tabela_de_paginas[current_frame].bit_ref == 1) {
-            // Pagina ganha uma segunda chance
-            tabela_de_paginas[current_frame].bit_ref = 0;
-            proximo_fifo =  (proximo_fifo + 1) % numero_quadros;  // Circular para o próximo quadro
+            // Página ganha uma segunda chance
+            // Zera o bit de referência da página
+            tabela_de_paginas[current_frame].bit_ref = 0; 
+            // Circular para o próximo quadro 
+            teste = (teste + 1) % numero_quadros;  
         } else {
-            subs = 1;
+            // Ocorreu a substituição
+            subs = 1;  
             // Substituir o quadro selecionado pelo novo
-            memoria_fisica[proximo_fifo].indice = indice_pagina;
+            memoria_fisica[proximo_fifo].indice = indice_pagina; 
         }
     }
-    return current_frame;
+    // Retorna o índice do quadro substituído
+    return current_frame;  
 }
+
 
 int main (int argc, char *argv[]){
     // tp2virtual lru arquivo.log 4 128
@@ -222,13 +241,14 @@ int main (int argc, char *argv[]){
         exit(1);
     };
     if(argc > 6){
-        printf("O programa requer no máximo 5 entradas obrigatórias. Favor executar novamente com o número correto de parâmetros!\n");
+        printf("O programa requer no máximo 5 entradas. Favor executar novamente com o número correto de parâmetros!\n");
         exit(1);
     };
 
     // Variaveis para rodar o programa no modo debug
     int debug = 0;
-    int limte_linhas = 501;
+    // Caso o comando inclua um quinto argumento com valor debug, o programa imprime um relatório
+    // detalhado do passo a passo so simulador
     if (argc == 6 && strcmp(argv[5],"debug") == 0){
         debug = 1;  
     }
@@ -256,11 +276,7 @@ int main (int argc, char *argv[]){
     // Os parâmetros argv[3] e argv[4] são transformados em int (função atoi()) pois serão tratados como numéricos
     // pela lógica do código
     int tamanho_quadro_memoria = atoi(argv[3]);
-    // Tamanho em bytes da página (binary)
-    //int tamanho_quadro_memoria = tamanho_quadro_memoria_aux * pow(2,10);
-    // Tamanho em bytes da página (binary)
     int tamanho_memoria_total = atoi(argv[4]);
-    // int tamanho_memoria_total  = tamanho_memoria_total_aux * pow(2,10);
 
     // Funções para validação das entradas 
     // Cancela a execução do programa caso alguma entrada não seja validada
@@ -276,7 +292,11 @@ int main (int argc, char *argv[]){
     Pagina *tabela_de_paginas = (Pagina *) malloc(sizeof(Pagina) * (1 << 21));
     // Inicializa a tabela de páginas
     if (tabela_de_paginas != NULL) {
+        // Calcula o tamanho de uma única estrutura Pagina e multiplica pelo resultado de (1 << 21),
+        // que é equivalente a deslocar o valor 1 em 21 bits para a esquerda. 
+        // Isso resulta no número total de bytes necessários para armazenar (1 << 21) estruturas Pagina.
         memset(tabela_de_paginas, 0, sizeof(Pagina) * (1 << 21));
+    // Aponta o erro e encerra o programa caso a memória não tenha sido alocada corretamente
     } else {
         printf("Nâo foi possível alocar memória para tabela_de_paginas.\n");
         exit(1);
@@ -286,9 +306,10 @@ int main (int argc, char *argv[]){
     Quadro *memoria_fisica = (Quadro *) malloc(sizeof(Quadro) * numero_quadros);
     // Inicializa a memória física
     if (memoria_fisica != NULL) {
-        memset(memoria_fisica, 0, sizeof(Quadro) * numero_quadros);   
+        memset(memoria_fisica, 0, sizeof(Quadro) * numero_quadros);  
+    // Aponta o erro e encerra o programa caso a memória não tenha sido alocada corretamente
     } else {
-        printf("Não foi possível alocar memoria para memoria_fisica.\n");
+        printf("Não foi possível alocar memória para memoria_fisica.\n");
         exit(1);
     }
 
@@ -300,12 +321,12 @@ int main (int argc, char *argv[]){
         exit(1);
     }
 
-    // Variáveis de controle de ultimo acesso
+    // Variável de controle de ultimo acesso
     int clock = 0;
 
-    // Seed para geração de números aleatórios
+    // Seed para geração de números aleatórios com resultados reproduzíveis
     // Definir a semente para a função srand()
-    srand(123456);
+    srand(42);
 
     // Variáveis para coletar estatísticas
     int acessos_totais = 0;
@@ -314,40 +335,45 @@ int main (int argc, char *argv[]){
     int num_page_faults = 0;
     int num_dirty_pages = 0;
 
-
     printf("Executando simulador ...\n");
+
     // Loop principal para processar os acessos à memória
     unsigned addr;
     char rw;
+
+    // Lê o endereço e a operação (R ou W)
     while (fscanf(fptr, "%x %c\n", &addr, &rw) == 2) {
         acessos_totais++;
         
         // Incrementa o contador de tempo
         clock++;
+
+        // Determina o número da página a partir do endereço
         int indice_pagina = determinar_pagina(tamanho_quadro_memoria, addr);
 
+        // Seta o bit de referência da página para 1 
         tabela_de_paginas[indice_pagina].bit_ref = 1;
 
-        // Lê o endereço e a operação (R ou W)
-        // Em um sistema real, sempre que uma operação de escrita é realizada em uma página na memória, o bit de "dirty" (ou suja)
+        // Sempre que uma operação de escrita é realizada em uma página na memória, 
+        // ela fica suja
         if (rw == 'W' || rw == 'w' ) {
         acessos_escrita++;
         tabela_de_paginas[indice_pagina].suja = 1;
         }  
         if (rw == 'R'|| rw == 'r') {
         acessos_leitura++;
-        }   
+        }  
+
         if (debug){
-            if(acessos_totais == limte_linhas){
-                break;
-            }
             printf("Linhas lidas: %d\n", acessos_totais);
             printf("Acessing page: %d\n", indice_pagina);
         }
+
         // Verifica se a página está na memória física
         if (tabela_de_paginas[indice_pagina].referencia != 0){
-            // página na memória física
-            // atualiza ultimo acesso
+            // Página já está na memória física
+            
+            // Procura o quadro ao qual ela está alocada
             int aux = -1;
             for(int i = 0; i <numero_quadros; i++){
                 if(memoria_fisica[i].indice == indice_pagina){
@@ -358,25 +384,27 @@ int main (int argc, char *argv[]){
             printf("Pagina já está na memória fisica (Sem page fault). Esta alocada no quadro: %d\n", aux);
             }
 
+            // atualiza ultimo acesso da página e do quadro
             tabela_de_paginas[indice_pagina].ultimo_acesso = clock;
             memoria_fisica[aux].ultimo_acesso = clock;  
         } else {
+            // Página não está na memória física, ocrrência de page fault
             if (debug){
             printf("Pagina nao esta na memoria fisica! Page fault\n");
             }
-            // pagina não está na memória física
+            
+            // Incrementa o contador de page faults
             num_page_faults++;
 
-            // Verifica se há um quadro vazio na memória física
+            // Verifica se há um quadro vazio na memória física procurando algum quadro desocupado
             int quadro_vazio = -1;
             for (int i = 0; i < numero_quadros; i++) {
-            //printf("Memoria física no quadro %d está livre? %d\n",i, memoria_fisica[i].ocupado);
-            
                 if (memoria_fisica[i].ocupado == 0) {
                     if (debug){
                         printf("Quadro vazio encontrado! Memoria alocada ao quadro: %d\n", i);
                     }
-                // atualiza memoria fisica
+                // Se achou um quasdro livre, atualiza a memória física colocando o quadro como ocupado,
+                // o indice como o indice da página e o último acesso com o clock atual
                 memoria_fisica[i].ocupado = 1;
                 memoria_fisica[i].indice = indice_pagina;
                 memoria_fisica[i].ultimo_acesso = clock;
@@ -384,7 +412,8 @@ int main (int argc, char *argv[]){
                 break;
                 }
             }
-            // Se não há um quadro vazio, utiliza o algoritmo de substituição correspondente  
+            // Caso não exista um quadro vazio, utiliza-se o algoritmo de substituição selecionado para 
+            // substituir a página  
             int pagina_reposta = -1;             
             if (quadro_vazio == -1) {
                 if (debug){
@@ -401,24 +430,25 @@ int main (int argc, char *argv[]){
                 } 
 
                 if(tabela_de_paginas[pagina_reposta].suja == 1){
-                     //Teve que ser escrita de volta no disco
-                    // Operação de escrita em página na memória física
+                    // Página teve que ser escrita de volta no disco
                     num_dirty_pages++;
                 }
 
-                //Atualiza a tabela de páginas e a memória com o processo que não está presente
+                // Atualiza a tabela de páginas com o processo que não está presente
+                // Setando seus atributos como zero
                 tabela_de_paginas[pagina_reposta].referencia = 0;
                 tabela_de_paginas[pagina_reposta].ultimo_acesso = 0;
                 tabela_de_paginas[pagina_reposta].suja = 0;
                 tabela_de_paginas[pagina_reposta].bit_ref = 0;
+
                 if (debug){
                     printf("Pagina %d substituida\n", pagina_reposta);
                 }
             }
-            // Atualiza a tabela de páginas
+
+            // Atualiza a tabela de páginas com os valores para o novo processo
             tabela_de_paginas[indice_pagina].referencia = 1;
-            tabela_de_paginas[indice_pagina].ultimo_acesso = clock;  
-            //tabela_de_paginas[indice_pagina].bit_ref = 1;      
+            tabela_de_paginas[indice_pagina].ultimo_acesso = clock;      
         }             
                 
     };
