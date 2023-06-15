@@ -206,17 +206,16 @@ int substituicao_segunda_chance(Pagina *tabela_de_paginas, Quadro *memoria_fisic
     int subs = 0;  
     // Variável para armazenar o índice do quadro atual
     int current_frame = -1;  
-    int teste = 0;
 
     while (subs == 0) {
         // Encontrar a página do próximo FIFO
-        current_frame = memoria_fisica[teste].indice;
+        current_frame = memoria_fisica[proximo_fifo].indice;
         if (tabela_de_paginas[current_frame].bit_ref == 1) {
             // Página ganha uma segunda chance
             // Zera o bit de referência da página
             tabela_de_paginas[current_frame].bit_ref = 0; 
             // Circular para o próximo quadro 
-            teste = (teste + 1) % numero_quadros;  
+            proximo_fifo = (proximo_fifo + 1) % numero_quadros;  
         } else {
             // Ocorreu a substituição
             subs = 1;  
