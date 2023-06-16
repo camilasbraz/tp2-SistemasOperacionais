@@ -83,7 +83,7 @@ void check_tamanho_memoria_total(int check_tamanho_memoria) {
     else {
         printf("Tamanho de memória total inválido!\n");
         if(check_tamanho_memoria < 128 || check_tamanho_memoria> 16384){
-            printf("Valor fora da faixa razoável! Favor entrar com um valor maior ou igual a 2KB e menor ou igual a 64KB.\n");
+            printf("Valor fora da faixa razoável! Favor entrar com um valor maior ou igual a 128KB e menor ou igual a 16384KB.\n");
         }
         if(check_tamanho_memoria % 2){
             printf("Valor não múltiplo de 2. Favor entrar com um valor que seja divisível por 2.\n");
