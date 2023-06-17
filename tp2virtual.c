@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include <math.h>
 #include <time.h>
+#include <stdint.h>
 
 // Variaveis globais
 // proximo fifo é utilizado no algorirmo de substituição segunda chance
@@ -33,7 +34,7 @@ void check_algoritmo_substituicao(char *algoritmo_check) {
     }
     else {
         printf("Algoritmo de substituição inválido!\n Favor executar novamente escolhendo '2A', 'FIFO', 'LRU' ou 'RANDOM' como algoritmo.\n");
-        exit(0);  
+        exit(1);  
     };
 }
 
@@ -48,7 +49,7 @@ void check_arquivo_entrada(char *arquivo_check) {
     }
     else {
         printf("Arquivo de entrada de memória inválido!\n Favor executar novamente escolhendo 'compilador.log', 'compressor.log', 'matriz.log' ou 'simulador.log' como arquivo de entrada.\n");
-        exit(0);  
+        exit(1);  
     };
 }
 
@@ -95,6 +96,48 @@ void check_tamanho_memoria_total(int check_tamanho_memoria) {
     };
     }
 
+void verificar_linhas_arquivos(char *arquivo_entrada) {
+    // Lê cada linha do arquivo
+    // Variável para armazenar a linha lida do arquivo
+    char linha[100]; 
+    // Variável para armazenar o endereço em formato hexadecimal de 32 bits
+    uint32_t endereco; 
+    // Variável para armazenar a operação ('R' ou 'W')
+    char operacao; 
+
+    while (fgets(linha, sizeof(linha), arquivo_entrada) != NULL) {
+        // Verificar se a linha é nula
+        if (endereco == 0 && operacao == '\0') {
+            // Pular a linha nula
+            continue;
+        }
+
+        // Verificar o formato da linha
+        if (sscanf(linha, "%x %c", &endereco, &operacao) != 2) {
+            // A linha não está no formato correto
+            printf("Uma linha fora do formato esperado foi encontrada. Favor verificar seu arquivo de entrada!\n");
+            printf("O programa será encerrado agora!\n");
+            exit(1);
+        }
+
+        // Verificar se o endereço está dentro do intervalo esperado
+        if (!(endereco >= 0x00000000 && endereco <= 0xFFFFFFFF)) {
+            // O endereço não está no formato correto
+            printf("Um endereço %x fora do formato esperado foi encontrado. Favor verificar seu arquivo de entrada!\n", endereco);
+            printf("O programa será encerrado agora!\n");
+            exit(1);
+        }
+
+        // Verificar se a operação é válida ('R' ou 'W')
+        if (operacao != 'R' && operacao != 'W') {
+            // A operação não é válida
+            printf("Uma operação inválida foi encontrada. Favor verificar seu arquivo de entrada!\n");
+            printf("O programa será encerrado agora!\n");
+            exit(1);
+        }
+    }
+    return;
+}
 
 void relatorio_estatisticas(char *arquivo_entrada, int tamanho_quadro, int tamanho_memoria, char *algoritmo_substituicao, int acessos_totais,
                             int acessos_leitura, int acessos_escrita, int num_page_faults, int num_dirty_pages) {
@@ -118,40 +161,40 @@ void relatorio_estatisticas(char *arquivo_entrada, int tamanho_quadro, int taman
 int determinar_pagina(int tamanho_quadro_memoria, unsigned addr) {
     unsigned s, tmp;
 
-    // Converte tamanho do quadro de memória de kilobytes para bytes
+    // Converter tamanho do quadro de memória de kilobytes para bytes
     tmp = tamanho_quadro_memoria * 1024;  
-     // Variável para armazenar o número de bits necessários para representar o tamanho do quadro de memória
+    // Variável para armazenar o número de bits necessários para representar o tamanho do quadro de memória
     s = 0; 
 
     while (tmp > 1) {
-        // Desloca o valor de 'tmp' uma posição para a direita (equivalente a dividir por 2)
+        // Deslocar o valor de 'tmp' uma posição para a direita (equivalente a dividir por 2)
         tmp = tmp >> 1;  
-        // Incrementa 's' em 1 a cada iteração, contando o número de bits necessários para representar o tamanho do quadro
+        // Incrementar 's' em 1 a cada iteração, contando o número de bits necessários para representar o tamanho do quadro
         s++; 
     }
 
-    // Calcula o número da página a partir do endereço de 32 bits
+    // Calcular o número da página a partir do endereço de 32 bits
     int pagina = addr >> s;  // Desloca o endereço 'addr' para a direita em 's' posições (remove os bits menos significativos)
     
-    // Retorna o número da página correspondente ao endereço
+    // Retornar o número da página correspondente ao endereço
     return pagina;  
 }
 
 
 int substituicao_fifo(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int indice_pagina, int numero_quadros) {
     // Implementação do algoritmo FIFO (First-In, First-Out)
-    // Armazena o índice da página que será substituída (a primeira página inserida)
+    // Armazenar o índice da página que será substituída (a primeira página inserida)
     int pagina_reposta = memoria_fisica[0].indice;  
 
-    // Desloca os índices das páginas uma posição para a esquerda
+    // Deslocar os índices das páginas uma posição para a esquerda
     for (int i = 1; i < numero_quadros; i++) {
         memoria_fisica[i - 1].indice = memoria_fisica[i].indice;  
     }
 
-    // Substitui o último quadro pelo novo
+    // Substituir o último quadro pelo novo
     memoria_fisica[numero_quadros - 1].indice = indice_pagina; 
 
-    // Retorna o índice da página que foi substituída
+    // Retornar o índice da página que foi substituída
     return pagina_reposta;  
 }
 
@@ -160,7 +203,7 @@ int substituicao_lru(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int indi
     // Implementação do algoritmo LRU (Least Recently Used)
     // Variável para armazenar o índice do quadro com a página menos recentemente utilizada
     int min_index = 0;  
-    // Armazena o tempo de acesso da primeira página na memória física
+    // Armazenar o tempo de acesso da primeira página na memória física
     int min_access_time = memoria_fisica[0].ultimo_acesso;  
 
     // Encontrar o quadro com o menor tempo de acesso (página menos recentemente utilizada)
@@ -173,29 +216,29 @@ int substituicao_lru(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int indi
         }
     }
 
-    // Armazena o índice da página que será substituída
+    // Armazenar o índice da página que será substituída
     int pagina_reposta = memoria_fisica[min_index].indice;  
 
     // Substituir o quadro encontrado pelo novo
     memoria_fisica[min_index].indice = indice_pagina;  
-    // Atualiza o tempo de acesso do quadro para o tempo atual
+    // Atualizar o tempo de acesso do quadro para o tempo atual
     memoria_fisica[min_index].ultimo_acesso = tempo_atual;  
 
-    // Retorna o índice da página que foi substituída pelo algoritmo LRU
+    // Retornar o índice da página que foi substituída pelo algoritmo LRU
     return pagina_reposta;  
 }
 
 int substituicao_random(Pagina *tabela_de_paginas, Quadro *memoria_fisica, int indice_pagina, int numero_quadros) {
     // Implementação do algoritmo aleatório
-    // Gera uma posição aleatória dentro do número de quadros
+    // Gerar uma posição aleatória dentro do número de quadros
     int random_position = rand() % numero_quadros;  
-    // Armazena o índice da página que será substituída
+    // Armazenar o índice da página que será substituída
     int pagina_reposta = memoria_fisica[random_position].indice;  
 
     // Substituir um quadro aleatório pelo novo índice
     memoria_fisica[random_position].indice = indice_pagina;  
 
-    // Retorna o índice da página que foi substituída aleatoriamente
+    // Retornar o índice da página que foi substituída aleatoriamente
     return pagina_reposta;  
 }
 
@@ -319,6 +362,8 @@ int main (int argc, char *argv[]){
         printf("Erro na abertura do arquivo de memória de entrada. Favor verificar seu arquivo!\n");
         exit(1);
     }
+
+    verificar_linhas_arquivo(arquivo_entrada_memoria);
 
     // Variável de controle de ultimo acesso
     int clock = 0;
