@@ -94,31 +94,29 @@ void check_tamanho_memoria_total(int check_tamanho_memoria) {
         }
         exit(1);  
     };
-    }
+}
 
-void verificar_linhas_arquivos(char *arquivo_entrada) {
-    // Lê cada linha do arquivo
-    // Variável para armazenar a linha lida do arquivo
-    char linha[100]; 
-    // Variável para armazenar o endereço em formato hexadecimal de 32 bits
-    uint32_t endereco; 
-    // Variável para armazenar a operação ('R' ou 'W')
-    char operacao; 
+
+
+void verificar_linhas_arquivo(FILE* arquivo_entrada) {
+    char linha[100];
+    const char* endereco_texto;
+    uint32_t endereco;
+    char operacao;
 
     while (fgets(linha, sizeof(linha), arquivo_entrada) != NULL) {
-        // Verificar se a linha é nula
-        if (endereco == 0 && operacao == '\0') {
-            // Pular a linha nula
-            continue;
-        }
 
-        // Verificar o formato da linha
-        if (sscanf(linha, "%x %c", &endereco, &operacao) != 2) {
+        // Extrair o endereço e a operação da linha
+        if (sscanf(linha, "%x %c", (unsigned int*)&endereco, &operacao) != 2) {
             // A linha não está no formato correto
             printf("Uma linha fora do formato esperado foi encontrada. Favor verificar seu arquivo de entrada!\n");
             printf("O programa será encerrado agora!\n");
             exit(1);
         }
+
+        // printf("Endereço: 0x%08X\n", endereco);
+        // printf("Operação: %c\n", operacao);
+        
 
         // Verificar se o endereço está dentro do intervalo esperado
         if (!(endereco >= 0x00000000 && endereco <= 0xFFFFFFFF)) {
@@ -136,8 +134,11 @@ void verificar_linhas_arquivos(char *arquivo_entrada) {
             exit(1);
         }
     }
-    return;
+
+    // Voltar o ponteiro para o início do arquivo
+    fseek(arquivo_entrada, 0, SEEK_SET);
 }
+
 
 void relatorio_estatisticas(char *arquivo_entrada, int tamanho_quadro, int tamanho_memoria, char *algoritmo_substituicao, int acessos_totais,
                             int acessos_leitura, int acessos_escrita, int num_page_faults, int num_dirty_pages) {
@@ -363,7 +364,7 @@ int main (int argc, char *argv[]){
         exit(1);
     }
 
-    verificar_linhas_arquivo(arquivo_entrada_memoria);
+    verificar_linhas_arquivo(fptr);
 
     // Variável de controle de ultimo acesso
     int clock = 0;

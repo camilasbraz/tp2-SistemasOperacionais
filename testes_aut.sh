@@ -4,11 +4,11 @@ indice_nome_arquivo=15
 indice_pages_fault=45
 indice_paginas_escritas=48
 
-arquivo_saida="saida.csv"
+arquivo_saida="saida_b.csv"
 
 make
 
-echo "Arquivo,Algoritmo,Tamanho da memória,Tamanho da página,Page faults,Páginas escritas,Tempo de execução (em segundos  ),Teste" > $arquivo_saida
+echo "Arquivo,Algoritmo,Tamanho da memória,Tamanho da página,Page faults,Páginas escritas,Tempo de execução (em segundos),Teste" > $arquivo_saida
 
 declare -A algoritmos=(
   ["fifo"]="FIFO"
