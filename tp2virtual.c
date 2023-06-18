@@ -1,10 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include <math.h>
-#include <time.h>
-#include <stdint.h>
+#include "tp2virtual.h"
 
 // Variaveis globais
 // proximo fifo é utilizado no algorirmo de substituição segunda chance
@@ -339,22 +333,20 @@ int main (int argc, char *argv[]){
     // Loop principal para processar os acessos à memória
     unsigned addr;
     char rw;
-    char linha[100];
-    int linesRead;
+    int linhas_lidas;
+    uint32_t endereco;
     
     // Lê o endereço e a operação (R ou W)
-    //while (fscanf(fptr, "%x %c", &addr, &rw) == 2) {
-    while ((linesRead = fscanf(fptr, "%x %c", &addr, &rw)) != EOF) {
+    while ((linhas_lidas = fscanf(fptr, "%x %c", &addr, &rw)) != EOF) {
 
-        //Extrair o endereço e a operação da linha
-        if (linesRead != 2) {
+        if (linhas_lidas != 2) {
             // A linha não está no formato correto
             printf("Uma linha fora do formato esperado foi encontrada. Favor verificar seu arquivo de entrada!\n");
             printf("O programa será encerrado agora!\n");
             exit(1);
         }
     
-        uint32_t endereco = addr;
+        endereco = addr;
         // Verificar se o endereço está dentro do intervalo esperado
         if (!(endereco >= 0x00000000 && endereco <= 0xFFFFFFFF)) {
             // O endereço não está no formato correto
