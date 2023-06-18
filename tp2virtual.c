@@ -4,21 +4,6 @@
 // proximo fifo é utilizado no algorirmo de substituição segunda chance
 int proximo_fifo = 0;
 
-// Estrutura para representar um quadro de memoria na memória física
-typedef struct {
-    int indice;           // Número da página que ocupa o quadro
-    int ultimo_acesso;    // Tempo do último acesso ao quadro
-    int ocupado;          // Flag para indicar se o quadro está ocupado    
-} Quadro;
-
-// Estrutura para representar uma entrada de página na tabela de páginas
-typedef struct {
-    int referencia;       // Flag para indicar se a página está na memória física
-    int ultimo_acesso;    // Tempo do último acesso à página
-    int suja;             // Flag que indica se a página está limpa ou suja
-    int bit_ref; // flag q indica se a pagina ja foi rerenciada ou nao
-} Pagina;
-
 void check_algoritmo_substituicao(char *algoritmo_check) {
     // O programa utiliza 4 algoritmos de substituição: 2a, fifo, lru ou random
     // Essa função confere se essa entrada feita por linha de comando do nome do algoritmo
