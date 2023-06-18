@@ -96,50 +96,6 @@ void check_tamanho_memoria_total(int check_tamanho_memoria) {
     };
 }
 
-
-
-void verificar_linhas_arquivo(FILE* arquivo_entrada) {
-    char linha[100];
-    const char* endereco_texto;
-    uint32_t endereco;
-    char operacao;
-
-    while (fgets(linha, sizeof(linha), arquivo_entrada) != NULL) {
-
-        // Extrair o endereço e a operação da linha
-        if (sscanf(linha, "%x %c", (unsigned int*)&endereco, &operacao) != 2) {
-            // A linha não está no formato correto
-            printf("Uma linha fora do formato esperado foi encontrada. Favor verificar seu arquivo de entrada!\n");
-            printf("O programa será encerrado agora!\n");
-            exit(1);
-        }
-
-        // printf("Endereço: 0x%08X\n", endereco);
-        // printf("Operação: %c\n", operacao);
-        
-
-        // Verificar se o endereço está dentro do intervalo esperado
-        if (!(endereco >= 0x00000000 && endereco <= 0xFFFFFFFF)) {
-            // O endereço não está no formato correto
-            printf("Um endereço %x fora do formato esperado foi encontrado. Favor verificar seu arquivo de entrada!\n", endereco);
-            printf("O programa será encerrado agora!\n");
-            exit(1);
-        }
-
-        // Verificar se a operação é válida ('R' ou 'W')
-        if (operacao != 'R' && operacao != 'W') {
-            // A operação não é válida
-            printf("Uma operação inválida foi encontrada. Favor verificar seu arquivo de entrada!\n");
-            printf("O programa será encerrado agora!\n");
-            exit(1);
-        }
-    }
-
-    // Voltar o ponteiro para o início do arquivo
-    fseek(arquivo_entrada, 0, SEEK_SET);
-}
-
-
 void relatorio_estatisticas(char *arquivo_entrada, int tamanho_quadro, int tamanho_memoria, char *algoritmo_substituicao, int acessos_totais,
                             int acessos_leitura, int acessos_escrita, int num_page_faults, int num_dirty_pages) {
     // Esta funcao imprime no terminal os parâmetros de entrada do programa e as estatísiticas coletadas durante a execução do simulador
@@ -364,8 +320,6 @@ int main (int argc, char *argv[]){
         exit(1);
     }
 
-    verificar_linhas_arquivo(fptr);
-
     // Variável de controle de ultimo acesso
     int clock = 0;
 
@@ -385,9 +339,39 @@ int main (int argc, char *argv[]){
     // Loop principal para processar os acessos à memória
     unsigned addr;
     char rw;
-
+    char linha[100];
+    int linesRead;
+    
     // Lê o endereço e a operação (R ou W)
-    while (fscanf(fptr, "%x %c\n", &addr, &rw) == 2) {
+    //while (fscanf(fptr, "%x %c", &addr, &rw) == 2) {
+    while ((linesRead = fscanf(fptr, "%x %c", &addr, &rw)) != EOF) {
+
+        //Extrair o endereço e a operação da linha
+        if (linesRead != 2) {
+            // A linha não está no formato correto
+            printf("Uma linha fora do formato esperado foi encontrada. Favor verificar seu arquivo de entrada!\n");
+            printf("O programa será encerrado agora!\n");
+            exit(1);
+        }
+    
+        uint32_t endereco = addr;
+        // Verificar se o endereço está dentro do intervalo esperado
+        if (!(endereco >= 0x00000000 && endereco <= 0xFFFFFFFF)) {
+            // O endereço não está no formato correto
+            printf("Um endereço %x fora do formato esperado foi encontrado. Favor verificar seu arquivo de entrada!\n", endereco);
+            printf("O programa será encerrado agora!\n");
+            exit(1);
+        }
+
+        // Verificar se a operação é válida ('R' ou 'W')
+        if (rw != 'R' && rw != 'W') {
+            // A operação não é válida
+            printf("Uma operação inválida foi encontrada. Favor verificar seu arquivo de entrada!\n");
+            printf("O programa será encerrado agora!\n");
+            exit(1);
+        }
+    
+         // Incrementar o contador de acessosn totais
         acessos_totais++;
         
         // Incrementar o contador de tempo

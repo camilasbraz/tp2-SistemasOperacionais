@@ -1,4 +1,0 @@
-Arquivo,Algoritmo,Tamanho da memória,Tamanho da página,Page faults,Páginas escritas,Tempo de execução (em segundos),Teste
-compressor.log,FIFO,256,2,1249,423,30.400s,segundo_teste
-compressor.log,FIFO,256,4,1467,514,32.031s,segundo_teste
-compressor.log,FIFO,256,8,1804,639,30.833s,segundo_teste
