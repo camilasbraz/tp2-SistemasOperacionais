@@ -22,8 +22,8 @@ gerar_graficos <- function(dados_filtrados, var) {
     # Gráfico para o primeiro teste
     if (teste == "primeiro_teste") {
       grafico <- ggplot(dados_filtrados, aes(x = TamanhoMemoria, y = get(var))) +
-      labs(x = "Tamanho da Memória",
-           subtitle="Primeiro Teste"  )
+      labs(x = "Tamanho da Memória")
+       #    subtitle="Primeiro Teste"  )
       if (var == "PageFaults"){
         grafico <- grafico +
           ylim(0, 100000)
@@ -39,8 +39,8 @@ gerar_graficos <- function(dados_filtrados, var) {
     }
     else if (teste == "segundo_teste") {
         grafico <- ggplot(dados_filtrados, aes(x = TamanhoPagina, y = get(var)))+
-        labs(x = "Tamanho da Página",
-             subtitle="Segundo Teste")
+          labs(x = "Tamanho da Página")
+          #  subtitle="Segundo Teste")
         if (var == "PageFaults"){
           grafico <- grafico +
             ylim(0, 400000)
@@ -68,8 +68,12 @@ gerar_graficos <- function(dados_filtrados, var) {
                 axis.ticks.x=element_blank() ,
                axis.text.y=element_blank(),
                axis.ticks.y=element_blank() )+
-         labs(y = paste(var ),
-              title=algoritmo)
+         labs(y = paste(var ) 
+              #,
+              #title=algoritmo
+              )+
+         theme(strip.background =element_rect(fill="grey90"))+
+         theme(strip.text = element_text(colour = '#4d4d4d', size = 13))
         
         # Imprimir o gráfico
         print(grafico)
