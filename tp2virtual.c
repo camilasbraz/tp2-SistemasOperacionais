@@ -291,8 +291,11 @@ int main (int argc, char *argv[]){
         exit(1);
     }
 
+    char arquivo_entrada[100] = "./input_files/";
+    strcat(arquivo_entrada, arquivo_entrada_memoria);
+
     // Abertura do arquivo de entrada com extensão .log no modo leitura
-    FILE *fptr = fopen(arquivo_entrada_memoria, "r");
+    FILE *fptr = fopen(arquivo_entrada, "r");
     // Aponta o erro e encerra o programa caso a leitura do arquivo acima não funcione corretamente 
     if(fptr== NULL){
         printf("Erro na abertura do arquivo de memória de entrada. Favor verificar seu arquivo!\n");
